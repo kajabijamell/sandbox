@@ -1,0 +1,247 @@
+{% include "section_style", bgColor: "rgba(0,0,0,.5)", defaultImg: "custom.jpg", vertAlign: section.settings.vertical, bgImage: true %}
+<!-- Extra Settings Variables -->
+{% assign s-HorAlign          = section.settings.horizontal %}
+{% assign s-OffsetNumber      = section.settings.section_reveal %}
+{% assign s-OffsetPeriod      = section.settings.section_offset_period %}
+{% if section.settings.event_id %}
+  {% assign s-OffsetEvent     = current_site.find_event[section.settings.event_id] %}
+  {% assign s-OffsetEventDate = s-OffsetEvent.occurs_at | date: "%Y-%jT%T%:z" %}
+{% endif %}
+
+<!-- Kjb Settings Variables -->
+{% assign kjb-Reveal    = 'section_reveal' | settings_id: section: section %}
+
+{% if editor %}
+  <style>
+    .background-image--{{ s-ID }}.hide {
+      display: block;
+    }
+    .background-image--{{ s-ID }}.hide:after {
+      content: "Section Hidden for {{ s-OffsetNumber }} {{ s-OffsetPeriod }}";
+    }
+  </style>
+{% endif %}
+
+<style>
+.splash-wrapper--{{section.id}} {
+  min-height: 50vh !important;
+  display: table;
+  width: 100%;
+}
+.background-image--{{ s-ID }} {
+  background-attachment: fixed;
+}
+.content--{{ s-ID }} {
+  padding: 50px 20px;
+  background-color: {{section.settings.content_bg_color}};
+  text-align: {{section.settings.alignment}}
+}
+</style>
+
+<div class="background-image background-image--{{ s-ID }} .splash-wrapper--{{section.id}} timed-section" data-offset-number="{{ s-OffsetNumber }}" data-offset-period="{{ s-OffsetPeriod }}" data-event="{{ s-OffsetEventDate }}" kjb-settings-id="{{ kjb-Reveal }}">
+  <div class="section section--custom_content section--{{ s-VertAlign }} section--{{ s-HorAlign }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      <div class="row">
+        <!-- <div class="col-md-6">
+        </div> -->
+        <div class="col-md-6 content--{{ s-ID }}" kjb-settings-id="{{ 'content_bg_color' | settings_id: section: section }}">
+          <div kjb-settings-id="{{ 'body' | settings_id: section: section, block: block }}">
+            {{ section.settings.body }}
+          </div>
+          {% for block in section.blocks %}
+            {% include "cta_block" %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Text Parallax",
+    "blocks": [
+      {
+      "type": "cta",
+      "name": "Call To Action",
+      "elements": [
+        {
+          "type": "header",
+          "content": "Call To Action"
+        },
+        {
+          "type": "divider"
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "CTA Text",
+          "default": "CALL TO ACTION"
+        },
+        {
+          "type": "action",
+          "id": "btn_action",
+          "label": "CTA Action",
+          "anchor": true,
+          "two_step": true,
+          "default": "http://www.kajabi.com"
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_target",
+          "label": "Open In New Window",
+          "default": "false"
+        },
+        {
+          "type": "radio",
+          "id": "btn_style",
+          "label": "CTA Style",
+          "default": "solid",
+          "options": [
+            { "label": "Solid", "value": "solid" },
+            { "label": "Outline", "value": "outline" }
+          ]
+        },
+        {
+          "type": "radio",
+          "id": "btn_size",
+          "label": "CTA Size",
+          "default": "med",
+          "options": [
+            { "label": "Small", "value": "small" },
+            { "label": "Medium", "value": "med" },
+            { "label": "Large", "value": "large" }
+          ]
+        },
+        {
+          "type": "radio",
+          "id": "btn_width",
+          "label": "Button Width",
+          "default": "auto",
+          "options": [
+            { "label": "Auto", "value": "auto" },
+            { "label": "Full Width", "value": "block" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "btn_background_color",
+          "label": "Button Color",
+          "allow_blank": true
+        },
+        {
+          "type": "color",
+          "id": "btn_text_color",
+          "label": "Button Text Color",
+          "allow_blank": true,
+          "info": "For solid buttons only"
+        }
+      ]
+    }
+    ],
+    "elements": [
+      {
+        "type": "rich_text",
+        "id": "body",
+        "label": "Body Text",
+        "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>"
+      },
+      {
+        "type": "color",
+        "label": "Content Background Color",
+        "id": "content_bg_color",
+        "allow_blank": true,
+        "default": "RGBA(0, 0, 0, 0.64)"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Use Background Image",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_overlay",
+        "label": "Use Image Overlay",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image",
+        "info": "Suggested dimensions: 2880 × 1200. Learn more about how to properly use background images [here](premier_hero_bg_image).",
+        "fit": "max",
+        "width": 3000,
+        "height": 3000
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true,
+        "info": "Will be used as overlay if settings for background image selected. Use Opacity slider. Learn more about working with image overlays [here](image_overlay)"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "allow_blank": true,
+        "info": "Text color will change automatically based on the brightness of your background color. Use this setting if you would like to override with a custom color."
+      },
+      {
+        "type": "radio",
+        "id": "alignment",
+        "label": "Text Alignment",
+        "default": "left",
+        "options": [
+          { "label": "Left", "value": "left" },
+          { "label": "Center", "value": "center" },
+          { "label": "Right", "value": "right" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "horizontal",
+        "label": "Horizontal Alignment",
+        "default": "left",
+        "options": [
+          { "label": "Left", "value": "left" },
+          { "label": "Center", "value": "center" },
+          { "label": "Right", "value": "right" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text Parallax",
+        "description": "Use this section to create your own layout—add text, images, videos, a call to action, or enter your own custom code.",
+        "category": "Content",
+        "blocks": [
+          { "type": "cta" }
+        ]
+      },
+      {
+        "name": "Facebook Comments",
+        "description": "Add a comment section that will be linked to the user’s Facebook account.",
+        "category": "Content",
+        "blocks": [
+          { "type": "facebook",
+            "settings": {
+              "width": "col-md-12"
+            }
+          }
+        ],
+        "settings": {
+          "show_img": "false",
+          "background_color": "#ffffff",
+          "text_color": "#000000"
+        }
+      }
+    ]
+  }
+{% endschema %}
