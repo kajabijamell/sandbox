@@ -1,0 +1,36 @@
+{% assign btnId                = section.id %}
+{% assign btnSettingsId        = 'btn_action' | settings_id: section: section %}
+{% assign btnAction            = section.settings.btn_action  %}
+{% assign btnText              = section.settings.btn_text  %}
+{% assign btnColor             = section.settings.btn_background_color | default: settings.color_primary %}
+{% assign btnTextColor         = section.settings.btn_text_color | default: settings.text_color_light %}
+{% assign btnStyle             = section.settings.btn_style  %}
+{% assign btnWidth             = section.settings.btn_width  %}
+{% assign btnSize              = section.settings.btn_size  %}
+{% assign btnTarget            = section.settings.btn_target %}
+{% assign btnOffsetNumber      = section.settings.btn_Reveal %}
+{% assign btnOffsetPeriod      = section.settings.btn_offset_period %}
+{% if section.settings.event_id %}
+  {% assign btnOffsetEvent     = current_site.find_event[section.settings.event_id] %}
+  {% assign btnOffsetEventDate = btnOffsetEvent.occurs_at | date: "%Y-%jT%T%:z" %}
+{% endif %}
+{% if btnTarget %}
+  {% assign btnTarget = "_blank" %}
+{% else %}
+  {% assign btnTarget = "" %}
+{% endif %}
+
+<style>
+  /*============================================================================
+    #Individual CTA Style
+  ==============================================================================*/
+  .btn--solid.btn--{{ btnId }} {
+    background: {{ btnColor }};
+    border-color: {{ btnColor }};
+    color: {{ btnTextColor }};
+  }
+  .btn--outline.btn--{{ btnId }} {
+    border-color: {{ btnColor }};
+    color: {{ btnColor }};
+  }
+</style>

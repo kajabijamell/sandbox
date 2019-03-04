@@ -1,0 +1,50 @@
+<!-- Block Variables -->
+{% assign b-ID           = block.id %}
+{% assign b-BgColor      = block.settings.background_color | default: "#fff" %}
+{% assign b-TextColor    = block.settings.text_color %}
+{% assign b-AccentColor  = block.settings.accent_color %}
+{% assign b-PopularText  = block.settings.popular %}
+{% assign b-PopularColor = block.settings.popular_color %}
+{% assign b-Title        = block.settings.title %}
+{% assign b-Price        = block.settings.price %}
+{% assign b-Frequency    = block.settings.frequency %}
+{% assign b-Content      = block.settings.content %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Popular    = 'popular' | settings_id: section: section, block: block %}
+{% assign kjb-BgColor    = 'background_color' | settings_id: section: section, block: block %}
+{% assign kjb-Title      = 'title' | settings_id: section: section, block: block %}
+{% assign kjb-Price      = 'price' | settings_id: section: section, block: block %}
+{% assign kjb-Frequency  = 'frequency' | settings_id: section: section, block: block %}
+{% assign kjb-Content    = 'content' | settings_id: section: section, block: block %}
+
+{% if b-AccentColor != "" %}
+  <style>
+    .card--{{ b-ID }} .pricing__title {
+      color: {{ b-AccentColor }};
+    }
+  </style>
+{% endif %}
+
+{% if b-PopularText != blank %}
+  <div class="pricing__popular" style="background: {{ b-PopularColor }};" kjb-settings-id="{{ kjb-Popular }}">
+    {{ b-PopularText }}
+  </div>
+  <style>
+    .card--{{ b-ID }} {
+      margin-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  </style>
+{% endif %}
+
+<div class="card pricing section--{{ b-BgColor | color_scheme_class }} card--{{ b-ID }}" style="text-align: {{ section.settings.alignment }};background: {{ b-BgColor }};color:{{ b-TextColor }};" kjb-settings-id="{{ kjb-BgColor }}">
+  <div class="card-block">
+    <h4 class="pricing__title" kjb-settings-id="{{ kjb-Title }}">{{ b-Title }}</h4>
+    <h2 class="pricing__price" kjb-settings-id="{{ kjb-Price }}">{{ b-Price }}</h2>
+    <p class="pricing__frequency" kjb-settings-id="{{ kjb-Frequency }}">{{ b-Frequency }}</p>
+    <div class="pricing__content" kjb-settings-id="{{ kjb-Content }}">{{ b-Content }}</div>
+    {% include "cta_block" %}
+  </div>
+</div>

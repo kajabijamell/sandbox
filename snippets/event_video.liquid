@@ -1,0 +1,33 @@
+<div class="event_video" data-event-time="{{ ev-Date }}" data-offset-number="{{ ev-offset }}" data-offset-period="{{ ev-offsetPer }}">
+  <div class="event_video__item event_video__item--before background-image" kjb-settings-id="{{ kjb-BeforeBg }}">
+    <div class="event_video__box">
+      <div class="event_video__box-inner">
+        <h2 class="event_video--text" kjb-settings-id="{{ kjb-BeforeText }}">{{ s-BeforeText }}</h2>
+        {% include "countdown" %}
+      </div>
+    </div>
+  </div>
+  <div class="event_video__item event_video__item--join" kjb-settings-id="{{ kjb-JoinBg }}">
+    <div class="event_video__box">
+      <div class="event_video__box-inner">
+        <h2 class="event_video--text" kjb-settings-id="{{ kjb-JoinText }}">{{ s-JoinText }}</h2>
+        <a class="event_video__autoplay btn btn-cta btn--{{ btnWidth }} btn--{{ btnStyle }} btn--{{ btnSize }} btn--{{ btnId }}" kjb-settings-id="{{ btnSettingsId }}">{{ btnText }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="event_video__item event_video__item--during">
+    {% if v %}
+      {{ v | wistia_video: auto_play: "false", still_url: "", player_preference: "html5", controls_visibl_on_load: "false", playbar: "false", fullscreen_button: "false", playback_rate_control: "false", quality_control: "false", settings_control: "false", small_play_button: "false", volume_control: "false", wmode: "transparent", play_button: "false" }}
+    {% endif %}
+  </div>
+  <div class="event_video__item event_video__item--after" kjb-settings-id="{{ kjb-AfterBg }}">
+    <div class="event_video__box">
+      <div class="event_video__box-inner">
+        <h2 class="event_video--text" kjb-settings-id="{{ kjb-AfterText }}">{{ s-AfterText }}</h2>
+        {% for block in section.blocks %}
+          {% include "cta_block" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

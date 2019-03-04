@@ -1,0 +1,123 @@
+{
+  "display_name": "Blank Canvas",
+  "overrides": {
+    "sections": {
+      "header": {
+        "settings": {
+          "show_header": "false",
+          "logo_type": "image",
+          "logo_text": "PREMIER",
+          "logo": "",
+          "header_height": "",
+          "show_menu": "true",
+          "menu": "main-menu",
+          "show_header_announcement": "false",
+          "announcement_text": "Announcement",
+          "announcement_link": "",
+          "announcement_color": "#2e91fc",
+          "announcement_text_color": "#fff",
+          "background_color": "",
+          "align_logo": "left"
+        },
+        "type": "header"
+      },
+      "footer": {
+        "settings": {
+          "show_footer": "false",
+          "show_copyright": "true",
+          "copyright": "Kajabi",
+          "show_logo": "false",
+          "logo": "",
+          "show_menu": "true",
+          "menu": "footer",
+          "align_logo": "left"
+        },
+        "type": "footer"
+      },
+      "pop_two_step": {
+        "settings": {
+          "show": "false",
+          "form": "",
+          "thank_you_url": "",
+          "btn_text": "Submit",
+          "style": "placeholder",
+          "btn_style": "solid",
+          "btn_width": "auto",
+          "btn_background_color": "",
+          "btn_text_color": "",
+          "background_color": "",
+          "text_color": ""
+        },
+        "block_order": [
+          "1492724736659",
+          "1492724740714"
+        ],
+        "type": "pop_two_step",
+        "blocks": {
+          "1492724736659": {
+            "settings": {
+              "progress_percent": "50",
+              "progress_text": "% Complete",
+              "progress_background_color": "",
+              "progress_bar_color": ""
+            },
+            "type": "progress"
+          },
+          "1492724740714": {
+            "settings": {
+              "text": "<h3>Two Step</h3>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            },
+            "type": "text"
+          }
+        }
+      },
+      "pop_exit": {
+        "settings": {
+          "show": "false",
+          "enabled": "false",
+          "popup_reveal": "0",
+          "frequency": "10",
+          "show_img": "false",
+          "image": "",
+          "text": "<h1>Exit Pop</h1>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.</p>",
+          "background_color": ""
+        },
+        "type": "pop_exit"
+      },
+      "1488569785948": {
+        "settings": {
+          "heading": "Blank Slate",
+          "subheading": "Delete this section so that you have a 100% clean slate and begin to build out your perfect Kajabi landing page. ",
+          "text": "",
+          "background_color": "#ffffff",
+          "text_color": "",
+          "alignment": "left",
+          "spacing": "medium"
+        },
+        "type": "text"
+      }
+    },
+    "text_color": "#2c3e50",
+    "text_color_light": "#fff",
+    "font_family": "Open Sans",
+    "heading_font_family": "Montserrat",
+    "color_primary": "#1abc9c",
+    "color_offset": "#f9f9f9",
+    "color_dark": "#30373e",
+    "color_darker": "#272d34",
+    "color_success": "#1abc9c",
+    "color_info": "#34495e",
+    "color_warning": "#f39c12",
+    "color_danger": "#e74c3c",
+    "color_page_bg": "#ffffff",
+    "color_container_bg": "#ffffff",
+    "use_bg_img": "false",
+    "page_background_img": "",
+    "v_align": "middle",
+    "container_width": "full",
+    "favicon": "",
+    "content_for_index": [
+      "1488569785948"
+    ]
+  }
+}

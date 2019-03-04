@@ -1,0 +1,174 @@
+{
+  "display_name": "Video Call to Action",
+  "overrides": {
+    "content_for_index": [
+      "1477700989680",
+      "1477701430488",
+      "1477701506909",
+      "1477701363516"
+    ],
+    "sections": {
+      "header": {
+        "settings": {
+          "show_header": "true",
+          "logo_type": "text",
+          "logo_text": "PREMIER",
+          "logo": "",
+          "header_height": "",
+          "show_menu": "true",
+          "menu": "main-menu",
+          "show_header_announcement": "false",
+          "announcement_text": "Announcement",
+          "announcement_link": "",
+          "announcement_color": "#2e91fc",
+          "announcement_text_color": "#fff",
+          "background_color": "",
+          "align_logo": "left"
+        },
+        "type": "header"
+      },
+      "1477700989680": {
+        "settings": {
+          "heading": "Video",
+          "subheading": "Upload a video to be hosted inside of Kajabi. Easily change the player color and autoplay the video when people visit this page.",
+          "autoplay": "false",
+          "video": "",
+          "image": "",
+          "end_cta_edit": "false",
+          "end_cta": "true",
+          "end_text": "This is a great place to put your CTA that you have been building towards in your video.",
+          "end_dismiss": "DISMISS MESSAGE",
+          "end_background": "",
+          "end_text_color": "",
+          "background_color": "",
+          "text_color": "",
+          "video_color": "#2e91fc",
+          "spacing": "xs-small"
+        },
+        "type": "video"
+      },
+      "1477701430488": {
+        "settings": {
+          "heading": "",
+          "subheading": "",
+          "btn_text": "CALL TO ACTION",
+          "btn_action": "#two-step",
+          "btn_style": "solid",
+          "btn_size": "large",
+          "btn_width": "block",
+          "btn_background_color": "",
+          "btn_text_color": "",
+          "btn_Reveal": "0",
+          "show_img": "false",
+          "bg_image": "",
+          "background_color": "#ffffff",
+          "text_color": "",
+          "spacing": "small"
+        },
+        "type": "cta"
+      },
+      "1477701506909": {
+        "settings": {
+          "hr": "false",
+          "hr_color": "#eeeeee",
+          "background_color": "",
+          "height": "24"
+        },
+        "type": "spacer"
+      },
+      "1477701363516": {
+        "settings": {
+          "heading": "Text",
+          "subheading": "Use a Text section to describe more about your products or services. Make sure to break your text into easy to read paragraphs to keep visitors engaged.",
+          "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
+          "background_color": "",
+          "text_color": "",
+          "alignment": "left",
+          "spacing": "medium"
+        },
+        "type": "text"
+      },
+      "footer": {
+        "settings": {
+          "show_footer": "true",
+          "show_copyright": "true",
+          "copyright": "Kajabi",
+          "show_logo": "false",
+          "logo": "",
+          "show_menu": "true",
+          "menu": "footer",
+          "align_logo": "left"
+        },
+        "type": "footer"
+      },
+      "pop_two_step": {
+        "settings": {
+          "show": "false",
+          "form": "",
+          "thank_you_url": "",
+          "btn_text": "Submit",
+          "style": "placeholder",
+          "btn_style": "solid",
+          "btn_width": "auto",
+          "btn_background_color": "",
+          "btn_text_color": "",
+          "background_color": "",
+          "text_color": ""
+        },
+        "block_order": [
+          "1492724736659",
+          "1492724740714"
+        ],
+        "type": "pop_two_step",
+        "blocks": {
+          "1492724736659": {
+            "settings": {
+              "progress_percent": "50",
+              "progress_text": "% Complete",
+              "progress_background_color": "",
+              "progress_bar_color": ""
+            },
+            "type": "progress"
+          },
+          "1492724740714": {
+            "settings": {
+              "text": "<h3>Two Step</h3>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+            },
+            "type": "text"
+          }
+        }
+      },
+      "pop_exit": {
+        "settings": {
+          "show": "false",
+          "enabled": "false",
+          "popup_reveal": "0",
+          "frequency": "10",
+          "show_img": "false",
+          "image": "",
+          "text": "<h1>Exit Pop</h1>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet.</p>",
+          "background_color": ""
+        },
+        "type": "pop_exit"
+      }
+    },
+    "text_color": "#000",
+    "text_color_light": "#fff",
+    "font_family": "Open Sans",
+    "heading_font_family": "Montserrat",
+    "color_primary": "#2e91fc",
+    "color_offset": "#f9f9f9",
+    "color_dark": "#30373e",
+    "color_darker": "#272d34",
+    "color_container_bg": "#f9f9f9",
+    "color_page_bg": "#eeeeee",
+    "color_success": "#1abc9c",
+    "color_info": "#34495e",
+    "color_warning": "#f39c12",
+    "color_danger": "#e74c3c",
+    "use_bg_img": "false",
+    "page_background_img": "",
+    "v_align": "top",
+    "container_width": "default"
+  }
+}

@@ -1,0 +1,222 @@
+{% include "section_style", bgColor: settings.color_offset, vertAlign: "middle" %}
+
+{% assign color = section.settings.background_color | default: settings.color_darker %}
+{% assign f = current_site.find_form[section.settings.form] %}
+{% assign formOffset = "offset-md-1" %}
+{% if f.fields.size > 2 %}
+  {% assign s-VertAlign = "top" %}
+  {% assign FormColWidth = "6" %}
+  {% assign ImgColWidth = "5" %}
+{% else %}
+  {% assign s-VertAlign = "middle" %}
+  {% assign FormColWidth = "8" %}
+  {% assign ImgColWidth = "3" %}
+{% endif %}
+{% if section.settings.show_image == false %}
+  {% assign FormColWidth = "12" %}
+  {% assign formOffset = "" %}
+  {% if f.fields.size > 2 %}
+    {% assign FormColWidth = "6" %}
+  {% endif %}
+{% endif %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--opt_in section--opt_in_bar section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      <div class="row text-xs-center">
+        {% if section.settings.position == "Right" %}
+          {% if section.settings.show_image %}
+            <div class="col-md-{{ ImgColWidth }}">
+              {% include "opt_in_img" %}
+            </div>
+          {% endif %}
+          <div class="col-md-{{ FormColWidth }} {{ formOffset }}">
+            {% include "opt_in_text" %}
+            {% if f %}
+              {% include "opt_in_form" %}
+            {% else %}
+              {% if editor %}
+                <div class="editor-null" kjb-settings-id="{{ 'form' | settings_id: section: section }}">
+                  <h5>Heads up! You have not selected a form yet.</h5>
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% else  %}
+          <div class="col-md-{{ FormColWidth }}">
+            {% include "opt_in_text" %}
+            {% if f %}
+              {% include "opt_in_form" %}
+            {% else %}
+              {% if editor %}
+                <div class="editor-null" kjb-settings-id="{{ 'form' | settings_id: section: section }}">
+                  <h5>Heads up! You have not selected a form yet.</h5>
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+          {% if section.settings.show_image %}
+            <div class="col-md-{{ ImgColWidth }} {{ formOffset }}">
+              {% include "opt_in_img" %}
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Opt In Form Bar",
+    "elements": [
+      {
+        "type": "form",
+        "id": "form",
+        "label": "Form",
+        "info": "Select the form you wish to use on this Landing Page. If you are new to opt in forms you can learn more [here](what_is_opt_in)",
+        "default": "default",
+        "allow_blank": true
+      },
+      {
+        "type": "action",
+        "id": "thank_you_url",
+        "label": "Thank You Page",
+        "info": "Leave this field blank to go to the default thank you page."
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "Submit"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_image",
+        "label": "Show Image",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Suggested dimensions: 1090 × 1090",
+        "fit": "max",
+        "width": 1500,
+        "height": 1500
+      },
+      {
+        "type": "rich_text",
+        "label": "Text",
+        "id": "text",
+        "default": "<h3>Join over 1 Million people making a living with online courses!</h3><p>Become a part of the Kajabi revolution.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Form Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "radio",
+        "label": "Position",
+        "id": "position",
+        "default": "Right",
+        "options": [
+          { "label": "Right", "value": "Right" },
+          { "label": "Left", "value": "Left" }
+        ]
+      },
+      {
+        "type": "radio",
+        "label": "Input Label",
+        "id": "style",
+        "default": "placeholder",
+        "options": [
+          { "label": "Placeholder", "value": "placeholder" },
+          { "label": "Label", "value": "label" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "btn_style",
+        "label": "Button Style",
+        "default": "solid",
+        "options": [
+          { "label": "Solid", "value": "solid" },
+          { "label": "Outline", "value": "outline" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "btn_width",
+        "label": "Button Width",
+        "default": "block",
+        "options": [
+          { "label": "Auto", "value": "auto" },
+          { "label": "Full Width", "value": "block" }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "btn_background_color",
+        "label": "Button Color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "allow_blank": true,
+        "info": "For solid buttons only"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "radio",
+        "id": "alignment",
+        "label": "Text Alignment",
+        "default": "left",
+        "options": [
+          {"value": "left", "label": "Left"},
+          {"value": "center", "label": "Centered"},
+          {"value": "right", "label": "Right"}
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "small",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Opt In Form Bar",
+        "description": "A different style of lead collection with more opportunity to describe and entice.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

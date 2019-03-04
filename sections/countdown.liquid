@@ -1,0 +1,176 @@
+{% include "section_style", bgColor: "#ffffff", vertAlign: "top" %}
+
+<!-- Countdown Variables -->
+{% assign c-NumberColor = section.settings.number_color | default: "" %}
+{% assign c-Style       = section.settings.style %}
+{% assign c-End         = section.settings.countdown_end_time %}
+{% assign c-Timezone    = section.settings.countdown_timezone %}
+{% assign c-Days        = section.settings.days_text %}
+{% assign c-Hours       = section.settings.hours_text %}
+{% assign c-Minutes     = section.settings.minutes_text %}
+{% assign c-Seconds     = section.settings.seconds_text %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-End       = 'countdown_end_time' | settings_id: section: section %}
+{% assign kjb-Days      = 'days_text' | settings_id: section: section %}
+{% assign kjb-Hours     = 'hours_text' | settings_id: section: section %}
+{% assign kjb-Minutes   = 'minutes_text' | settings_id: section: section %}
+{% assign kjb-Seconds   = 'seconds_text' | settings_id: section: section %}
+
+{% if c-NumberColor != "" %}
+  <style>
+    .section--{{ s-ID }} .countdown__amount, .section--{{ s-ID }} .countdown--card .countdown__amount {
+      color: {{ c-NumberColor }};
+    }
+  </style>
+{% endif %}
+
+<div class="background-image background-image--{{ s-ID }}">
+  <div id="" class="section section--countdown section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      <div class="countdown countdown--{{ c-Style }} countdown--sunset" id="countdown-timer" kjb-settings-id="{{ kjb-End }}" data-end-time="{{ c-End }}" data-timezone="{{ c-Timezone }}">
+        {% include "section_heading" %}
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="row">
+              <div class="col-xs-3 countdown__item">
+                <h2 id="days" class="countdown__amount days">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Days }}">{{ c-Days }}</h6>
+              </div>
+              <div class="col-xs-3 countdown__item">
+                <h2 id="hours" class="countdown__amount hours">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Hours }}">{{ c-Hours }}</h6>
+              </div>
+              <div class="col-xs-3 countdown__item">
+                <h2 id="minutes" class="countdown__amount minutes">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Minutes }}">{{ c-Minutes }}</h6>
+              </div>
+              <div class="col-xs-3 countdown__item">
+                <h2 id="seconds" class="countdown__amount seconds">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Seconds }}">{{ c-Seconds }}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Countdown Timer",
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": ""
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "countdown_end_time",
+        "label": "End Time",
+        "default": "2027-10-14 12:00:00",
+        "info": "You MUST use the following format: YYYY-MM-DD HH:MM:SS (24-Hour Clock)"
+      },
+      {
+        "type": "text",
+        "id": "countdown_timezone",
+        "label": "Timezone",
+        "default": "America/Los_Angeles",
+        "info": "Choose your timezone from the map [here](momentjs_timezone)."
+      },
+      {
+        "type": "header",
+        "style": "subheading",
+        "content": "Language"
+      },
+      {
+        "type": "text",
+        "id": "days_text",
+        "label": "Days",
+        "default": "DAYS"
+      },
+      {
+        "type": "text",
+        "id": "hours_text",
+        "label": "Hours",
+        "default": "HOURS"
+      },
+      {
+        "type": "text",
+        "id": "minutes_text",
+        "label": "Minutes",
+        "default": "MINS"
+      },
+      {
+        "type": "text",
+        "id": "seconds_text",
+        "label": "Seconds",
+        "default": "SECS"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "radio",
+        "id": "style",
+        "label": "Countdown Style",
+        "default": "",
+        "options": [
+          { "label": "Minimal", "value": "" },
+          { "label": "Boxed", "value": "boxed" },
+          { "label": "Card", "value": "card" }
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "allow_blank": true,
+        "info": "Text color will change automatically based on the brightness of your background color. Use this setting if you would like to override with a custom color."
+      },
+      {
+        "type": "color",
+        "label": "Number Color Override",
+        "id": "number_color",
+        "allow_blank": true,
+        "info": "The countdown numbers will default to the text color of the section. Use this setting to set a custom number color override."
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Countdown Timer",
+        "description": "Use this section to show when an event is going to begin or to countdown to an offer expiration date.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

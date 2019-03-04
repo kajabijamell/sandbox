@@ -1,0 +1,19 @@
+{% include "custom_block_style" %}
+
+<!-- Block Variables -->
+{% assign b-Text   = block.settings.text %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Text = 'text' | settings_id: section: section, block: block %}
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>
+
+<div class="{{ b-Width }} block--{{ b-ID }}">
+  <div kjb-settings-id="{{ kjb-Text }}">
+    {{ b-Text }}
+  </div>
+</div>
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>

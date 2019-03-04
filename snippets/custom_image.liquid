@@ -1,0 +1,40 @@
+{% include "custom_block_style" %}
+
+<!-- Block Variables -->
+{% assign b-Image      = block.settings.image | image_picker_url: 'placeholder.png' %}
+{% assign b-ImageWidth = block.settings.img_width | remove: "px" %}
+{% assign b-Action     = block.settings.img_action %}
+{% assign b-Target     = block.settings.link_target %}
+{% if b-Target %}
+  {% assign b-Target   = "_blank" %}
+{% else %}
+  {% assign b-Target   = "" %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Image    = 'image' | settings_id: section: section, block: block %}
+
+  <style>
+    .block--{{ block.id }} img {
+      display: inline-block;
+      {% if b-ImageWidth != "" %}
+        width: {{ b-ImageWidth }}px;
+      {% endif %}
+    }
+  </style>
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>
+
+<div class="{{ b-Width }} block--{{ b-ID }}">
+  {% if b-Action == "" %}
+    <img src="{{ b-Image }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+  {% else %}
+    <a href="{{ b-Action }}" target="{{ b-Target }}">
+      <img src="{{ b-Image }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+    </a>
+  {% endif %}
+</div>
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>

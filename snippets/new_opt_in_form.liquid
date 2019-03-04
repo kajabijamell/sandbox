@@ -1,0 +1,78 @@
+{% assign labelStyle = section.settings.style %}
+{% if labelStyle == "label" %}
+  {% assign use_label = true %}
+  {% assign use_placeholder = false %}
+{% else %}
+  {% assign use_label = false %}
+  {% assign use_placeholder = true %}
+{% endif %}
+{% form f %}
+  {% assign btnId        = 'btn_text' | settings_id: section: section %}
+  {% assign btnText      = section.settings.btn_text  %}
+  {% assign btnColor     = section.settings.btn_background_color | default: settings.color_primary %}
+  {% assign btnTextColor = section.settings.btn_text_color | default: settings.text_color_light %}
+  {% assign btnStyle     = section.settings.btn_style  %}
+  {% assign btnWidth     = section.settings.btn_width  %}
+
+  <style>
+    /*============================================================================
+      #Individual CTA Style
+    ==============================================================================*/
+    .btn--{{ btnId }}.btn--solid {
+      background: {{ btnColor }};
+      border-color: {{ btnColor }};
+      color: {{ btnTextColor }};
+    }
+    .btn--{{ btnId }}.btn--outline {
+      border-color: {{ btnColor }};
+      color: {{ btnColor }};
+    }
+  </style>
+  {% assign formBgColor = section.settings.form_bg_color %}
+  {% assign formTextColor = section.settings.form_text_color %}
+  {% assign formStyle = "flush" %}
+  {% if formBgColor != "" %}
+    {% assign formStyle = "boxed" %}
+    <style>
+      .section--{{ s-ID }} .optin__panel {
+        padding: 40px;
+        background: {{ formBgColor }};
+        margin: 1rem 0;
+      }
+      .section--{{ s-ID }} .optin__panel .optin--stacked {
+        margin: 0 -15px;
+      }
+    </style>
+  {% endif %}
+  {% if formTextColor != "" %}
+    <style>
+      .section--{{ s-ID }} .optin__heading, .section--{{ s-ID }} .optin__subheading {
+        color: {{ formTextColor }};
+      }
+      .section--{{ s-ID }} label {
+        color: {{ formTextColor }};
+      }
+    </style>
+  {% endif %}
+  <div class="section--middle optin__panel optin__panel--{{ formStyle }}" kjb-settings-id="{{ 'form' | settings_id: section: section }}">
+    <input type="hidden" name="thank_you_url" value="{{ section.settings.thank_you_url }}">
+    <div class="row optin optin--stacked">
+      <div class="col-md-12">
+        {% if section.settings.heading != "" %}
+          <h3 class="optin__heading" kjb-settings-id="{{ 'heading' | settings_id: section: section }}">{{ section.settings.heading }}</h3>
+        {% endif %}
+        {% if section.settings.subheading != "" %}
+          <p class="optin__subheading" kjb-settings-id="{{ 'subheading' | settings_id: section: section }}">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+      {% for field in f.fields %}
+        <div class="col-md-12" style="text-align: left">
+          {{ field | form_input: class: "form-group", input_class: "form-control", label: use_label, placeholder: use_placeholder }}
+        </div>
+      {% endfor %}
+      <div class="col-md-12">
+        <button class="btn btn--{{ btnId }} btn--{{ btnWidth }} btn--{{ btnStyle }} btn-form" id="form-button" type="submit" kjb-settings-id="{{ btnId }}">{{ btnText }}</button>
+      </div>
+    </div>
+  </div>
+{% endform %}

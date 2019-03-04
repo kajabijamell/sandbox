@@ -1,0 +1,47 @@
+{% assign b-Id = block.id %}
+{% assign to-BgColor = block.settings.text_overlay_background_color | default: "rgba(0,0,0,0.5)" %}
+{% assign to-TextColor = block.settings.text_overlay_text_color | default: "#ffffff" %}
+{% assign b-Target = block.settings.link_target %}
+{% if b-Target %}
+  {% assign b-Target = "_blank" %}
+{% else %}
+  {% assign b-Target = "" %}
+{% endif %}
+
+<style>
+  .gallery-image--{{ b-Id }} .gallery-image__overlay--bg {
+    background-color: {{ to-BgColor }};
+  }
+  .gallery-image--{{ b-Id }} .gallery-image__text-container, .gallery-image--{{ b-Id }} .gallery-image__text-container h3 {
+    color: {{ to-TextColor }};
+  }
+</style>
+
+<div class="gallery-image gallery-image--{{ b-Id }}">
+  {% if block.settings.img_action == "" %}
+    <a class="gallery-image__link">
+  {% else %}
+    <a class="gallery-image__link gallery-image__link--active" href="{{ block.settings.img_action }}" target="{{ b-Target }}">
+  {% endif %}
+  <img src="{{ block.settings.image | image_picker_url: "gallery.png" }}" class="img-fluid" kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}" />
+  {% if block.settings.show_text_overlay %}
+    <div class="gallery-image__overlay gallery-image__overlay--bg"></div>
+    <div class="gallery-image__overlay gallery-image__text-container" kjb-settings-id="{{ 'text_overlay_background_color' | settings_id: section: section, block: block }}">
+      <div class="gallery-image__table">
+        <div class="gallery-image__table-cell">
+          {% if block.settings.text_overlay_title != "" %}
+            <h3 class="gallery-image__title" kjb-settings-id="{{ 'text_overlay_title' | settings_id: section: section, block: block }}">
+              {{ block.settings.text_overlay_title }}
+            </h3>
+          {% endif %}
+          {% if block.settings.text_overlay_subtitle != "" %}
+            <p class="gallery-image__subtitle" kjb-settings-id="{{ 'text_overlay_subtitle' | settings_id: section: section, block: block }}">
+              {{ block.settings.text_overlay_subtitle }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  </a>
+</div>

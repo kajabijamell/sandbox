@@ -1,0 +1,221 @@
+[
+  {
+    "name": "Favicon",
+    "elements": [
+      {
+        "type": "header",
+        "content": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon Image",
+        "fit": "crop",
+        "width": 32,
+        "height": 32,
+        "info": "Must be a 32x32 PNG file. Transparency is supported. Please allow some time for favicon to change. Learn how to create your own favicon [here](canva_logos)"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "elements": [
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Heading Font Color",
+        "default": "#373F46"
+      },
+      {
+        "type": "color",
+        "id": "text_color_body",
+        "label": "Font Color",
+        "default": "#55636F"
+      },
+      {
+        "type": "color",
+        "id": "text_color_light",
+        "label": "Font Color ( Light )",
+        "default": "#fff"
+      },
+      {
+        "type": "font_select",
+        "label": "Heading Font Family",
+        "id": "heading_font_family",
+        "default": "Montserrat",
+        "preset": "google_fonts",
+        "options": []
+      },
+      {
+        "type": "select",
+        "id": "heading_font_weight",
+        "label": "Heading Font Weight",
+        "default": "700",
+        "options": [
+          { "label": "Normal", "value": "400" },
+          { "label": "Bold", "value": "700" }
+        ]
+      },
+      {
+        "type": "font_select",
+        "label": "Base Font Family",
+        "id": "font_family",
+        "default": "Montserrat",
+        "preset": "google_fonts",
+        "options": []
+      },
+      {
+        "type": "select",
+        "id": "font_size_base",
+        "label": "Base Font Size",
+        "default": "16px",
+        "options": [
+          { "label": "Small", "value": "16px" },
+          { "label": "Medium", "value": "18px" },
+          { "label": "Large", "value": "20px" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "font_size_hero",
+        "label": "Hero Section Header Size",
+        "default": "60px",
+        "options": [
+          { "label": "Small", "value": "40px" },
+          { "label": "Medium", "value": "60px" },
+          { "label": "Large", "value": "72px" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Color Scheme",
+    "elements": [
+      {
+        "type": "header",
+        "content": "Color Scheme"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary",
+        "default": "#2e91fc"
+      },
+      {
+        "type": "color",
+        "id": "color_offset",
+        "label": "Offset",
+        "default": "#f9f9f9"
+      },
+      {
+        "type": "color",
+        "id": "color_dark",
+        "label": "Dark",
+        "default": "#30373e"
+      },
+      {
+        "type": "color",
+        "id": "color_darker",
+        "label": "Darker",
+        "default": "#272d34"
+      }
+    ]
+  },
+  {
+    "name": "Message Colors",
+    "elements": [
+      {
+        "type": "header",
+        "content": "Message Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_success",
+        "label": "Success",
+        "default": "#1abc9c"
+      },
+      {
+        "type": "color",
+        "id": "color_info",
+        "label": "Info",
+        "default": "#34495e"
+      },
+      {
+        "type": "color",
+        "id": "color_warning",
+        "label": "Warning",
+        "default": "#f39c12"
+      },
+      {
+        "type": "color",
+        "id": "color_danger",
+        "label": "Danger",
+        "default": "#e74c3c"
+      }
+    ]
+  },
+  {
+    "name": "General Appearance",
+    "elements": [
+      {
+        "type": "header",
+        "content": "General Appearance"
+      },
+      {
+        "type": "color",
+        "id": "color_page_bg",
+        "label": "Page Background",
+        "default": "#eeeeee"
+      },
+      {
+        "type": "color",
+        "id": "color_container_bg",
+        "label": "Container Background Override",
+        "default": "",
+        "allow_blank": true,
+        "info": "If left blank your container background will be white unless you have a footer, in which case the container will take the footer background color."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_bg_img",
+        "label": "Use Background Image",
+        "default": "false"
+      },
+      {
+        "type": "image_picker",
+        "id": "page_background_img",
+        "label": "Page Background Image",
+        "info": "Suggested dimensions: 2500 × 2500",
+        "fit": "max",
+        "width": 3000,
+        "height": 3000
+      },
+      {
+        "type": "radio",
+        "id": "v_align",
+        "label": "Vertical Alignment",
+        "default": "top",
+        "options": [
+          { "label": "Top", "value": "top" },
+          { "label": "Middle", "value": "middle" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "container_width",
+        "label": "Container Width",
+        "default": "full",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Default", "value": "default" },
+          { "label": "Full Width", "value": "full" }
+        ]
+      }
+    ]
+  }
+]

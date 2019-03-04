@@ -1,0 +1,23 @@
+<!-- Block Variables -->
+{% assign b-Text    = block.settings.text %}
+{% assign b-Name    = block.settings.name %}
+{% assign b-Title   = block.settings.title %}
+{% assign b-Img     = block.settings.image | image_picker_url: 'testimonial.png' %}
+{% assign b-ImgShow = block.settings.show_image %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Text  = 'text' | settings_id: section: section, block: block %}
+{% assign kjb-Name  = 'name' | settings_id: section: section, block: block %}
+{% assign kjb-Title = 'title' | settings_id: section: section, block: block %}
+{% assign kjb-Img   = 'image' | settings_id: section: section, block: block %}
+
+<div class="item testimonial">
+  <p class="testimonial__text" kjb-settings-id="{{ kjb-Text }}">"{{ b-Text }}"</p>
+  {% if b-ImgShow %}
+    <img src="{{ b-Img }}" class="img-fluid img-circle testimonial__image" kjb-settings-id="{{ kjb-Img }}"/>
+  {% endif %}
+  <h5 class="testimonial__name" kjb-settings-id="{{ kjb-Name }}">
+    {{ b-Name }}<br>
+    <i class="testimonial__title" kjb-settings-id="{{ kjb-Title }}">{{ b-Title }}</i>
+  </h5>
+</div>

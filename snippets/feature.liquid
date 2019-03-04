@@ -1,0 +1,55 @@
+<!-- Block Variables -->
+{% assign b-ID         = block.id %}
+{% assign b-Link       = block.settings.action_link %}
+{% assign b-ShowImage  = block.settings.show_image %}
+{% assign b-Image      = block.settings.image | image_picker_url: 'feature.png' %}
+{% assign b-ImageWidth = block.settings.img_width %}
+{% assign b-Heading    = block.settings.heading %}
+{% assign b-Text       = block.settings.text %}
+{% assign b-ShowCta    = block.settings.show_cta %}
+{% assign b-Target     = block.settings.link_target %}
+{% if b-Target %}
+  {% assign b-Target   = "_blank" %}
+{% else %}
+  {% assign b-Target   = "" %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Block   = 'feature' | settings_id: section: section, block: block %}
+{% assign kjb-Image   = 'image' | settings_id: section: section, block: block %}
+{% assign kjb-Heading = 'heading' | settings_id: section: section, block: block %}
+{% assign kjb-Text    = 'text' | settings_id: section: section, block: block %}
+
+<!-- Sets the Img Width If Setting Has Been Used -->
+{% if b-ImageWidth != "" %}
+  {% assign imgWidth = b-ImageWidth | remove: "px" | append: "px" %}
+  <style>
+    .block--{{ b-ID }} img {
+      width: {{ imgWidth }};
+    }
+  </style>
+{% endif %}
+
+<div class="block--{{ b-ID }}" kjb-settings-id="{{ kjb-Block }}" style="text-align: {{ section.settings.alignment }}">
+  {% if b-Link == "" %}
+    {% if b-ShowImage %}
+      <img src="{{ b-Image }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+    {% endif %}
+    <h4 kjb-settings-id="{{ kjb-Heading }}">{{ b-Heading }}</h4>
+  {% else %}
+    {% if b-ShowImage %}
+      <a href="{{ b-Link }}" target="{{ b-Target }}">
+        <img src="{{ b-Image }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+      </a>
+    {% endif %}
+    <a href="{{ b-Link }}" target="{{ b-Target }}">
+      <h4 kjb-settings-id="{{ kjb-Heading }}">{{ b-Heading }}</h4>
+    </a>
+  {% endif %}
+  <div kjb-settings-id="{{ kjb-Text }}">
+    {{ b-Text }}
+  </div>
+  {% if b-ShowCta %}
+    {% include "cta_block" %}
+  {% endif %}
+</div>

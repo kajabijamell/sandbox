@@ -1,0 +1,104 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "top" %}
+
+<!-- Section Variables -->
+{% assign s-NumberOfPosts = section.settings.number_of_posts %}
+{% assign s-ShowImg       = section.settings.show_img %}
+{% assign s-ShowDate      = section.settings.show_date %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--blog_posts section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "section_heading" %}
+      <div class="row">
+        {% for post in current_site.blog.posts_published limit: s-NumberOfPosts %}
+          <div class="col-md-4">
+            {% include "blog_post" %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Blog Posts",
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Blog Posts"
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "Display recent posts from your blog. Posts will show in reverse chronological order. "
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Show Post Image",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_date",
+        "label": "Show Post Date",
+        "default": "true"
+      },
+      {
+        "type": "select",
+        "id": "number_of_posts",
+        "label": "Number Of Posts",
+        "default": "3",
+        "options": [
+          {"value": "1", "label": "1"},
+          {"value": "2", "label": "2"},
+          {"value": "3", "label": "3"},
+          {"value": "4", "label": "4"},
+          {"value": "5", "label": "5"},
+          {"value": "6", "label": "6"}
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Blog Posts",
+        "description": "Show recent posts from your Blog in reverse chronological order.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

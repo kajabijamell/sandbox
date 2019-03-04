@@ -1,0 +1,79 @@
+{% include "section_style", bgColor: settings.color_dark, vertAlign: "middle" %}
+
+<!-- Section Variables -->
+{% assign s-Alignment  = section.settings.alignment %}
+{% assign s-LinkList   = section.settings.link_list %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-LinkList = 'link_list' | settings_id: section: section %}
+
+<div id="" class="section section--link_list section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }}" kjb-settings-id="{{ kjb-Background }}">
+  <div class="container">
+    <nav class="nav nav-inline text-xs-{{ s-Alignment }}" kjb-settings-id="{{ kjb-LinkList }}">
+      {% for link in current_site.link_lists[s-LinkList].links %}
+        <a class="nav-link" href="{{ link.url }}">{{ link.name }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Link List",
+    "elements": [
+      {
+        "type": "link_list",
+        "id": "link_list",
+        "label": "Link List",
+        "default": "main-menu"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "radio",
+        "id": "alignment",
+        "label": "Text Alignment",
+        "default": "center",
+        "options": [
+          {"value": "left", "label": "Left"},
+          {"value": "center", "label": "Centered"},
+          {"value": "right", "label": "Right"}
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "xs-small",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Link List",
+        "description": "A series of links shown in addition to the navigation link list in the header.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

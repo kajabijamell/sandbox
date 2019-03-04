@@ -1,0 +1,249 @@
+{% include "section_style_hero", bgColor: "rgba(0,0,0,.7)", vertAlign: "middle", defaultImg: "hero.jpg", defaultVideo: "aifhr9jyfk", bgImageS: true %}
+
+{% if s-bgType == "video" %}
+<div style="overflow:hidden">
+  <div class="hero-background background-image background-image--{{ s-ID }} {{ s-SplashWrapper }}">
+    <div id="wistia_{{ s-BgVideoID }}" class="wistia_embed backgroundVideo" data-src="{{ s-BgVideoID }}" data-img="{{ s-BgImage }}" data-blank="blank.jpg"></div>
+{% else %}
+  <div class="hero-background background-image background-image--{{ s-ID }} {{ s-SplashWrapper }}">
+{% endif %}
+  <div class="section section--hero section--{{ s-VertAlign }} section--{{ s-AutoTextColor }} section--{{ s-Spacing }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Overlay }}">
+    <div class="container">
+      <div class="row">
+        {% if s-Alignment == "left" %}
+          <div class="col-md-6 text-xs-left btn__spacing btn__spacing--left">
+            {% include "hero_text" %}
+          </div>
+          <div class="col-md-6">
+          </div>
+        {% elsif s-Alignment == "right" %}
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6 text-xs-left btn__spacing btn__spacing--left">
+            {% include "hero_text" %}
+          </div>
+        {% else %}
+          <div class="col-md-8 btn__spacing btn__spacing--center">
+            {% include "hero_text" %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% if s-bgType == "video" %}
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Hero",
+    "blocks": [
+      {
+        "type": "hero_cta",
+        "name": "Call To Action",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Call To Action"
+          },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "CTA Text",
+            "default": "CALL TO ACTION"
+          },
+          {
+            "type": "action",
+            "id": "btn_action",
+            "label": "CTA Action",
+            "anchor": true,
+            "two_step": true,
+            "default": "http://www.kajabi.com"
+          },
+          {
+            "type": "checkbox",
+            "id": "btn_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "CTA Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_size",
+            "label": "CTA Size",
+            "default": "med",
+            "options": [
+              { "label": "Small", "value": "small" },
+              { "label": "Medium", "value": "med" },
+              { "label": "Large", "value": "large" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "auto",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          },
+          {
+            "type": "header",
+            "content": "Time Reveal",
+            "style": "subheading"
+          },
+          {
+            "type": "event",
+            "id": "event_id",
+            "label": "Select Your Event",
+            "info": "If no event is selected the button will time reveal based on page load."
+          },
+          {
+            "type": "text",
+            "id": "btn_Reveal",
+            "label": "Offset",
+            "info": "Must be a value greater than 0",
+            "default": ""
+          },
+          {
+            "type": "select",
+            "id": "btn_offset_period",
+            "label": "Offset Time Period",
+            "default": "seconds",
+            "options": [
+              { "label": "Seconds", "value": "seconds" },
+              { "label": "Minutes", "value": "minutes" },
+              { "label": "Hours", "value": "hours" },
+              { "label": "Days", "value": "days" }
+            ]
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "HERO SECTION"
+      },
+      {
+        "type": "rich_text",
+        "label": "Text",
+        "id": "text",
+        "default": "<p>A Hero section is used to introduce visitors to the product or service the page is associated with.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "radio",
+        "id": "type",
+        "label": "Type",
+        "default": "image",
+        "options": [
+          {"value": "image", "label": "Background Image"},
+          {"value": "video", "label": "Background Video"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_overlay",
+        "label": "Use Image Overlay",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image",
+        "info": "Suggested dimensions: 2880 × 1200. Learn more about how to properly use background images [here](premier_hero_bg_image).",
+        "fit": "max",
+        "width": 3000,
+        "height": 3000
+      },
+      {
+        "type": "video",
+        "id": "bg_video",
+        "label": "Background Video",
+        "info": "Video will play in the background of the seciton. Keep in mind the audio for this video will not be played. Learn what video formats Kajabi supports [here](supported_video_formats)."
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "overlay",
+        "allow_blank": true,
+        "info": "Will be used as overlay if settings for background image selected. Use Opacity slider. Learn more about working with image overlays [here](image_overlay)"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "allow_blank": true,
+        "info": "Text color will change automatically based on the brightness of your background color. Use this setting if you would like to override with a custom color."
+      },
+      {
+        "type": "radio",
+        "id": "alignment",
+        "label": "Alignment",
+        "default": "center",
+        "options": [
+          {"value": "left", "label": "Left"},
+          {"value": "center", "label": "Centered"},
+          {"value": "right", "label": "Right"}
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "large",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero",
+        "description": "Use this section to introduce users to the purpose or goal of your page.",
+        "category": "Content",
+        "blocks": [
+          { "type": "hero_cta" }
+        ]
+      }
+    ]
+  }
+{% endschema %}

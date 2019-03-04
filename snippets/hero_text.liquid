@@ -1,0 +1,7 @@
+<h1 kjb-settings-id="{{ kjb-Title }}">{{ s-Title }}</h1>
+<div kjb-settings-id="{{ kjb-Text }}">
+  {{ s-Text }}
+</div>
+{% for block in section.blocks %}
+  {% include "cta_block" %}
+{% endfor %}

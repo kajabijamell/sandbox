@@ -1,0 +1,58 @@
+<!-- Section Variables -->
+{% assign s-ID            = section.id %}
+{% assign s-Title         = section.settings.title %}
+{% assign s-Text          = section.settings.text %}
+{% assign s-bgType        = section.settings.type %}
+{% assign s-BgImage       = section.settings.bg_image | image_picker_url: defaultImg %}
+{% assign s-BgVideo       = current_site.find_video[section.settings.bg_video] %}
+{% assign s-BgVideoID     = s-BgVideo.wistia_id | default: defaultVideo %}
+{% assign s-BgImageS       = bgImageS  %}
+{% assign s-UseBgOverlay  = section.settings.show_overlay %}
+{% if s-BgImageS == true %}
+  {% if s-UseBgOverlay == true %}
+    {% assign s-BgColor       = section.settings.overlay | default: bgColor %}
+  {% else %}
+    {% assign s-BgColor       = "rgba(0,0,0,0)" %}
+  {% endif %}
+{% else %}
+  {% assign s-BgColor       = section.settings.overlay | default: bgColor %}
+{% endif %}
+{% assign s-AutoTextColor = s-BgColor | color_scheme_class %}
+{% assign s-TextColor     = section.settings.text_color %}
+{% assign s-Spacing       = section.settings.spacing %}
+{% assign s-VertAlign     = vertAlign %}
+{% assign s-Alignment     = section.settings.alignment %}
+{% if s-Spacing == "full" %}
+  {% assign s-SplashWrapper = "splash-wrapper" %}
+  {% assign s-Splash        = "splash" %}
+{% else %}
+  {% assign s-SplashWrapper = "" %}
+  {% assign s-Splash        = "" %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Overlay = 'overlay' | settings_id: section: section %}
+{% assign kjb-Title   = 'title' | settings_id: section: section %}
+{% assign kjb-Text    = 'text' | settings_id: section: section %}
+
+<style>
+  {% if s-bgType != "video" %}
+    .background-image--{{ s-ID }} {
+      background-image: url({{ s-BgImage }});
+    }
+  {% endif %}
+  .section--{{ s-ID }} {
+    /*============================================================================
+      #Background Color Override
+    ==============================================================================*/
+    background: {{ s-BgColor }};
+  }
+  {% if s-TextColor != "" %}
+    .section--{{ s-ID }}, .section--{{ s-ID }} h1, .section--{{ s-ID }} h2, .section--{{ s-ID }} h3, .section--{{ s-ID }} h4, .section--{{ s-ID }} h5 , .section--{{ s-ID }} h6  {
+      /*============================================================================
+        #Text Color Override
+      ==============================================================================*/
+      color: {{ s-TextColor }};
+    }
+  {% endif %}
+</style>

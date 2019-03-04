@@ -1,0 +1,264 @@
+{% include "section_style", bgColor: "rgba(20, 50, 92, 0.92)", defaultImg: "showcase.jpg", vertAlign: "middle", bgImage: true %}
+
+<!-- Section Variables -->
+{% assign s-Position  = section.settings.position %}
+{% assign s-Alignment = section.settings.alignment %}
+{% assign s-Img       = section.settings.image | image_picker_url: 'showcase_img.png' %}
+{% assign s-ImgShow   = section.settings.show_image %}
+{% assign s-Text      = section.settings.text %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Image = 'image' | settings_id: section: section %}
+{% assign kjb-Text  = 'text' | settings_id: section: section %}
+
+<div class="background-image background-image--{{ s-ID }} {{ s-SplashWrapper }}">
+  <div class="section section--showcase section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      <div class="row">
+        {% if s-ImgShow %}
+          {% if s-Position == "Right" %}
+            <div class="col-md-6">
+              {% include "showcase_text" %}
+            </div>
+            <div class="col-md-5 offset-sm-1">
+              <img src="{{ s-Img }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+            </div>
+          {% else %}
+            <div class="col-md-5">
+              <img src="{{ s-Img }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+            </div>
+            <div class="col-md-6 offset-sm-1">
+              {% include "showcase_text" %}
+            </div>
+          {% endif %}
+        {% else %}
+          <div class="col-md-12">
+            {% include "showcase_text" %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Showcase",
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "Call To Action",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Call To Action"
+          },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "CTA Text",
+            "default": "CALL TO ACTION"
+          },
+          {
+            "type": "action",
+            "id": "btn_action",
+            "label": "CTA Action",
+            "anchor": true,
+            "two_step": true,
+            "default": "http://www.kajabi.com"
+          },
+          {
+            "type": "checkbox",
+            "id": "btn_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "CTA Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_size",
+            "label": "CTA Size",
+            "default": "med",
+            "options": [
+              { "label": "Small", "value": "small" },
+              { "label": "Medium", "value": "med" },
+              { "label": "Large", "value": "large" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "auto",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          },
+          {
+            "type": "header",
+            "content": "Time Reveal",
+            "style": "subheading"
+          },
+          {
+            "type": "event",
+            "id": "event_id",
+            "label": "Select Your Event",
+            "info": "If no event is selected the button will time reveal based on page load."
+          },
+          {
+            "type": "text",
+            "id": "btn_Reveal",
+            "label": "Offset",
+            "info": "Must be a value greater than 0",
+            "default": ""
+          },
+          {
+            "type": "select",
+            "id": "btn_offset_period",
+            "label": "Offset Time Period",
+            "default": "seconds",
+            "options": [
+              { "label": "Seconds", "value": "seconds" },
+              { "label": "Minutes", "value": "minutes" },
+              { "label": "Hours", "value": "hours" },
+              { "label": "Days", "value": "days" }
+            ]
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "rich_text",
+        "label": "Text",
+        "id": "text",
+        "default": "<h2>Flexible Pricing Options</h2><p>Lorem ipsum dolor sit amet, integer sodales eu, amet pretium lectus eget nisl sed ligula. Wisi sagittis at eu, accumsan pellentesque mauris proin.</p><p>Duis ac arcu aenean arcu vestibulum, in rutrum suspendisse erat quam eleifend, mus ipsum sed, tempus turpis. Nec lobortis dolor donec, at autem mauris, donec arcu sit porta mi. Magna est elit ut vulputate. Dignissim nunc, arcu felis libero luctus mi, mauris odio a non massa donec, donec sed vestibulum eget diam mollis parturient, aliquam eu qui curabitur turpis.</p>"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_image",
+        "label": "Show Image",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Suggested dimensions: 898 × 898",
+        "fit": "max",
+        "width": 1000,
+        "height": 1000
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Use Background Image",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_overlay",
+        "label": "Use Image Overlay",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image",
+        "info": "Suggested dimensions: 2880 × 1200. Learn more about how to properly use background images [here](premier_hero_bg_image).",
+        "fit": "max",
+        "width": 3000,
+        "height": 3000
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true,
+        "info": "Will be used as overlay if settings for background image selected. Use Opacity slider. Learn more about working with image overlays [here](image_overlay)"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "allow_blank": true,
+        "info": "Text color will change automatically based on the brightness of your background color. Use this setting if you would like to override with a custom color."
+      },
+      {
+        "type": "radio",
+        "label": "Image Position",
+        "id": "position",
+        "default": "Right",
+        "options": [
+          { "label": "Right", "value": "Right" },
+          { "label": "Left", "value": "Left" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "alignment",
+        "label": "Text Alignment",
+        "default": "left",
+        "options": [
+          {"value": "left", "label": "Left"},
+          {"value": "center", "label": "Centered"},
+          {"value": "right", "label": "Right"}
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+        {
+            "name": "Showcase",
+            "description": "Grab attention and show off your product or service with this section.",
+            "category": "Content",
+            "blocks": [
+                { "type": "cta", "settings": { } }
+            ]
+        }
+    ]
+  }
+{% endschema %}

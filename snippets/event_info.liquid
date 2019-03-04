@@ -1,0 +1,52 @@
+<div class="event" data-event-time="{{ e-Date }}" data-offset-number="{{ e-offset }}" data-offset-period="{{ e-offsetPer }}">
+  <div class="row">
+    <div class="col-md-8">
+      {% if section.settings.title != "" %}
+        <h2 class="event__title" kjb-settings-id="{{ 'title' | settings_id: section: section }}">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.description != "" %}
+        <div class="event__desc" kjb-settings-id="{{ 'description' | settings_id: section: section }}">{{ section.settings.description }}</div>
+      {% endif %}
+      {% if section.settings.e-ID != "" %}
+        {% if e-DateFormat != "none" %}
+          <h4 class="event__date" kjb-settings-id="{{ 'format' | settings_id: section: section }}" data-format="{{ e-DateFormat }}" data-show-year="{{ e-ShowYear }}" data-show-time="{{ e-ShowTime }}" data-show-timezone="{{ e-ShowTimezone }}"></h4>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  {% if c-Show %}
+    {% if section.settings.e-ID != "" %}
+      <div class="countdown countdown--{{ c-Style }}" id="countdown-timer" kjb-settings-id="{{ kjb-EventId }}" data-end-action="{{ c-EndAction }}" data-end-action-use="{{ c-EndActionUse }}">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-xs-3 countdown__item">
+                <h2 id="days" class="countdown__amount days">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Days }}">{{ c-Days }}</h6>
+              </div>
+              <div class="col-xs-3 countdown__item">
+                <h2 id="hours" class="countdown__amount hours">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Hours }}">{{ c-Hours }}</h6>
+              </div>
+              <div class="col-xs-3 countdown__item">
+                <h2 id="minutes" class="countdown__amount minutes">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Minutes }}">{{ c-Minutes }}</h6>
+              </div>
+              <div class="col-xs-3 countdown__item">
+                <h2 id="seconds" class="countdown__amount seconds">00</h2>
+                <h6 class="countdown__title" kjb-settings-id="{{ kjb-Seconds }}">{{ c-Seconds }}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+  <div class="row">
+    <div class="col-sm-10">
+      {% for block in section.blocks %}
+        {% include "cta_block" %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

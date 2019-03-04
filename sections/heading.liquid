@@ -1,0 +1,132 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "top" %}
+
+<!-- Section Variables -->
+{% assign h-ShowBar = section.settings.show_bar %}
+{% assign h-BarColor = section.settings.bar_color | default: settings.color_primary %}
+{% assign h-Heading = section.settings.heading %}
+{% assign h-SubHeading = section.settings.subheading %}
+{% assign h-HeadingSize = section.settings.font_size_heading %}
+{% assign h-SubHeadingSize = section.settings.font_size_subheading %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Heading = 'heading' | settings_id: section: section %}
+{% assign kjb-SubHeading = 'subheading' | settings_id: section: section %}
+
+<!-- Conditional Styles For Accent Bar -->
+{% if h-ShowBar %}
+  <style>
+    .section--{{ s-ID }} .section--heading__title {
+      padding-bottom: 1rem;
+      margin-bottom: 0;
+    }
+    .section--{{ s-ID }} .section--heading__title:after {
+      background: {{ h-BarColor }};
+      height: 4px;
+    }
+  </style>
+{% endif %}
+
+<div id="" class="section section--heading section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }}" kjb-settings-id="{{ kjb-Background }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        {% if h-Heading != "" %}
+          <h2 class="section--heading__title section--heading__title--{{ h-HeadingSize }}" kjb-settings-id="{{ kjb-Heading }}">{{ h-Heading }}</h2>
+        {% endif %}
+        {% if h-SubHeading != "" %}
+          <p class="section--heading__subtitle section--heading__subtitle--{{ h-SubHeadingSize }}" kjb-settings-id="{{ kjb-SubHeading }}">{{ h-SubHeading }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Heading",
+    "elements": [
+      {
+        "type": "text",
+        "label": "Heading",
+        "id": "heading",
+        "default": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "A simple and clean area to title the other sections of your page with a bit more style. "
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_bar",
+        "label": "Show Bottom Bar",
+        "default": "false"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Bar Color",
+        "id": "bar_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "font_size_heading",
+        "label": "Heading Size",
+        "default": "30px",
+        "options": [
+          { "label": "Small", "value": "sm" },
+          { "label": "Medium", "value": "md" },
+          { "label": "Large", "value": "lg" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "font_size_subheading",
+        "label": "Subheading Size",
+        "default": "16px",
+        "options": [
+          { "label": "Small", "value": "sm" },
+          { "label": "Medium", "value": "md" },
+          { "label": "Large", "value": "lg" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Heading",
+        "description": "A simple and clean area to title or preface the other sections of your page.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

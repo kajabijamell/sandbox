@@ -1,0 +1,15 @@
+<!-- Block Variables -->
+{% assign b-BgColor   = block.settings.background_color | default: "#fff" %}
+{% assign b-TextColor = block.settings.text_color %}
+{% assign b-Heading   = block.settings.heading %}
+{% assign b-Embed     = block.settings.embed %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-BgColor = 'background_color' | settings_id: section: section, block: block %}
+{% assign kjb-Heading = 'heading' | settings_id: section: section, block: block %}
+{% assign kjb-Embed   = 'embed' | settings_id: section: section, block: block %}
+
+<div class="section--social_cards__card section--{{ b-BgColor | color_scheme_class }}" kjb-settings-id="{{ kjb-BgColor }}" style="background: {{ b-BgColor }};color:{{ b-TextColor }};">
+  <h4 kjb-settings-id="{{ kjb-Heading }}">{{ b-Heading }}</h4>
+  <div class="section--social_cards__code" kjb-settings-id="{{ kjb-Embed }}">{{ b-Embed }}</div>
+</div>

@@ -1,0 +1,14 @@
+{% if section.settings.heading == "" and section.settings.subheading == "" %}
+  <div class="row heading heading--empty">
+{% else %}
+  <div class="row heading">
+{% endif %}
+  <div class="col-md-8">
+    {% if section.settings.heading != "" %}
+      <h2 class="heading__title" kjb-settings-id="{{ 'heading' | settings_id: section: section }}">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.subheading != "" %}
+      <p class="heading__subtitle" kjb-settings-id="{{ 'subheading' | settings_id: section: section }}">{{ section.settings.subheading }}</p>
+    {% endif %}
+  </div>
+</div>

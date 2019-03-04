@@ -1,0 +1,36 @@
+<!-- Countdown Variables -->
+{% assign c-Days        = section.settings.days_text %}
+{% assign c-Hours       = section.settings.hours_text %}
+{% assign c-Minutes     = section.settings.minutes_text %}
+{% assign c-Seconds     = section.settings.seconds_text %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Days      = 'days_text' | settings_id: section: section %}
+{% assign kjb-Hours     = 'hours_text' | settings_id: section: section %}
+{% assign kjb-Minutes   = 'minutes_text' | settings_id: section: section %}
+{% assign kjb-Seconds   = 'seconds_text' | settings_id: section: section %}
+
+<div class="countdown" data-event-time="{{ e-Date }}">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-xs-3 countdown__item">
+          <h2 id="days" class="countdown__amount days">00</h2>
+          <h6 class="countdown__title" kjb-settings-id="{{ kjb-Days }}">{{ c-Days }}</h6>
+        </div>
+        <div class="col-xs-3 countdown__item">
+          <h2 id="hours" class="countdown__amount hours">00</h2>
+          <h6 class="countdown__title" kjb-settings-id="{{ kjb-Hours }}">{{ c-Hours }}</h6>
+        </div>
+        <div class="col-xs-3 countdown__item">
+          <h2 id="minutes" class="countdown__amount minutes">00</h2>
+          <h6 class="countdown__title" kjb-settings-id="{{ kjb-Minutes }}">{{ c-Minutes }}</h6>
+        </div>
+        <div class="col-xs-3 countdown__item">
+          <h2 id="seconds" class="countdown__amount seconds">00</h2>
+          <h6 class="countdown__title" kjb-settings-id="{{ kjb-Seconds }}">{{ c-Seconds }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "top" %}
+
+<div id="" class="section section--gallery section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }}">
+  <div class="row">
+    {% for block in section.blocks %}
+      {% if section.blocks.size == 1 %}
+        <div class="col-md-12">
+          {% include "gallery_image" %}
+        </div>
+      {% elsif section.blocks.size == 2 %}
+        <div class="col-md-6">
+          {% include "gallery_image" %}
+        </div>
+      {% elsif section.blocks.size == 3 %}
+        <div class="col-md-4">
+          {% include "gallery_image" %}
+        </div>
+      {% else %}
+        <div class="col-md-3">
+          {% include "gallery_image" %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Image Gallery",
+    "blocks": [
+      {
+        "type": "gallery_image",
+        "name": "Gallery Image",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Gallery Image"
+          },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "fit": "max",
+            "width": 2880,
+            "height": 2880,
+            "info": "For best results use images of the same size. Suggested dimensions: 2160 × 2160"
+          },
+          {
+            "type": "action",
+            "id": "img_action",
+            "label": "Image Action",
+            "anchor": true,
+            "two_step": true,
+            "default": ""
+          },
+          {
+            "type": "checkbox",
+            "id": "link_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "header",
+            "content": "Text Overlay",
+            "style": "subheading"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_text_overlay",
+            "label": "Show Text Overlay",
+            "default": "false"
+          },
+          {
+            "type": "color",
+            "id": "text_overlay_background_color",
+            "label": "Background Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "text_overlay_text_color",
+            "label": "Text Color",
+            "allow_blank": true
+          },
+          {
+            "type": "text",
+            "id": "text_overlay_title",
+            "label": "Title",
+            "default": "Please Note"
+          },
+          {
+            "type": "textarea",
+            "id": "text_overlay_subtitle",
+            "label": "Subtitle",
+            "default": "Space for text inside gallery images is limited. Resize your browser to ensure text isn't cut off on smaller devices."
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image Gallery",
+        "description": "Add multiple visuals to showcase your brand or product.",
+        "category": "Content",
+        "blocks": [
+          {
+            "type": "gallery_image",
+            "settings": {
+              "show_text_overlay": "true",
+              "text_overlay_subtitle": "",
+              "image": "static_assets/default_premier/gallery_1.jpg",
+              "text_overlay_title": "Simple"
+            }
+          },
+          {
+            "type": "gallery_image",
+            "settings": {
+              "show_text_overlay": "true",
+              "text_overlay_subtitle": "",
+              "image": "static_assets/default_premier/gallery_2.jpg",
+              "text_overlay_title": "Powerful"
+            }
+          },
+          {
+            "type": "gallery_image",
+            "settings": {
+              "show_text_overlay": "true",
+              "text_overlay_subtitle": "",
+              "image": "static_assets/default_premier/gallery_3.jpg",
+              "text_overlay_title": "Responsive"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

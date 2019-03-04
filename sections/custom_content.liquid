@@ -1,0 +1,790 @@
+{% include "section_style", bgColor: "rgba(0,0,0,.5)", defaultImg: "custom.jpg", vertAlign: section.settings.vertical, bgImage: true %}
+<!-- Extra Settings Variables -->
+{% assign s-HorAlign          = section.settings.horizontal %}
+{% assign s-OffsetNumber      = section.settings.section_reveal %}
+{% assign s-OffsetPeriod      = section.settings.section_offset_period %}
+{% if section.settings.event_id %}
+  {% assign s-OffsetEvent     = current_site.find_event[section.settings.event_id] %}
+  {% assign s-OffsetEventDate = s-OffsetEvent.occurs_at | date: "%Y-%jT%T%:z" %}
+{% endif %}
+
+<!-- Kjb Settings Variables -->
+{% assign kjb-Reveal    = 'section_reveal' | settings_id: section: section %}
+
+{% if editor %}
+  <style>
+    .background-image--{{ s-ID }}.hide {
+      display: block;
+    }
+    .background-image--{{ s-ID }}.hide:after {
+      content: "Section Hidden for {{ s-OffsetNumber }} {{ s-OffsetPeriod }}";
+    }
+  </style>
+{% endif %}
+
+<div class="background-image background-image--{{ s-ID }} {{ s-SplashWrapper }} timed-section" data-offset-number="{{ s-OffsetNumber }}" data-offset-period="{{ s-OffsetPeriod }}" data-event="{{ s-OffsetEventDate }}" kjb-settings-id="{{ kjb-Reveal }}">
+  <div class="section section--custom_content section--{{ s-VertAlign }} section--{{ s-HorAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "section_heading" %}
+      <div class="row">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'cta' %}
+              {% include "custom_cta" %}
+            {% when 'code' %}
+              {% include "custom_code" %}
+            {% when 'text' %}
+              {% include "custom_text" %}
+            {% when 'image' %}
+              {% include "custom_image" %}
+            {% when 'video' %}
+              {% include "custom_video" %}
+            {% when 'form' %}
+              {% include "custom_form" %}
+            {% when 'facebook' %}
+              {% include "custom_facebook" %}
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Custom Content",
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "Call To Action",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Call To Action"
+          },
+          {
+            "type": "rich_text",
+            "label": "Text",
+            "id": "text",
+            "default": ""
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text",
+            "default": "CALL TO ACTION"
+          },
+          {
+            "type": "action",
+            "id": "btn_action",
+            "label": "Button Action",
+            "anchor": true,
+            "two_step": true,
+            "default": "http://www.kajabi.com"
+          },
+          {
+            "type": "checkbox",
+            "id": "btn_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "Button Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_size",
+            "label": "Button Size",
+            "default": "med",
+            "options": [
+              { "label": "Small", "value": "small" },
+              { "label": "Medium", "value": "med" },
+              { "label": "Large", "value": "large" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "auto",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          },
+          {
+            "type": "header",
+            "content": "Time Reveal",
+            "style": "subheading"
+          },
+          {
+            "type": "event",
+            "id": "event_id",
+            "label": "Select Your Event",
+            "info": "If no event is selected the button will time reveal based on page load."
+          },
+          {
+            "type": "text",
+            "id": "btn_Reveal",
+            "label": "Offset",
+            "info": "Must be a value greater than 0",
+            "default": ""
+          },
+          {
+            "type": "select",
+            "id": "btn_offset_period",
+            "label": "Offset Time Period",
+            "default": "seconds",
+            "options": [
+              { "label": "Seconds", "value": "seconds" },
+              { "label": "Minutes", "value": "minutes" },
+              { "label": "Hours", "value": "hours" },
+              { "label": "Days", "value": "days" }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Block Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "radio",
+            "id": "alignment",
+            "label": "Alignment",
+            "default": "center",
+            "options": [
+              {"value": "left", "label": "Left"},
+              {"value": "center", "label": "Centered"},
+              {"value": "right", "label": "Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      },
+      {
+        "type": "code",
+        "name": "Custom Code",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Custom Code"
+          },
+          {
+            "type": "textarea",
+            "label": "Code",
+            "id": "code",
+            "default": "<h2>Code Section</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>"
+          },
+          {
+            "type": "header",
+            "content": "Block Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "radio",
+            "id": "alignment",
+            "label": "Alignment",
+            "default": "center",
+            "options": [
+              {"value": "left", "label": "Left"},
+              {"value": "center", "label": "Centered"},
+              {"value": "right", "label": "Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Text"
+          },
+          {
+            "type": "rich_text",
+            "label": "Text",
+            "id": "text",
+            "default": "<h4>Not finding what you need in our premade sections? Use Custom Content to create your own layout.</h4>"
+          },
+          {
+            "type": "header",
+            "content": "Block Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "radio",
+            "id": "alignment",
+            "label": "Alignment",
+            "default": "center",
+            "options": [
+              {"value": "left", "label": "Left"},
+              {"value": "center", "label": "Centered"},
+              {"value": "right", "label": "Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "name": "Image",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "fit": "max",
+            "width": 2300,
+            "height": 2300,
+            "info": "Suggested dimensions: 1856 × 1044"
+          },
+          {
+            "type": "action",
+            "id": "img_action",
+            "label": "Image Action",
+            "anchor": true,
+            "two_step": true,
+            "default": ""
+          },
+          {
+            "type": "checkbox",
+            "id": "link_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "text",
+            "id": "img_width",
+            "label": "Custom Image Width",
+            "info": "You may use the format 10px or simply 10. If left blank your image will take its natural width with a max width of 100%.",
+            "default": ""
+          },
+          {
+            "type": "header",
+            "content": "Block Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "radio",
+            "id": "alignment",
+            "label": "Alignment",
+            "default": "center",
+            "options": [
+              {"value": "left", "label": "Left"},
+              {"value": "center", "label": "Centered"},
+              {"value": "right", "label": "Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      },
+      {
+        "type": "video",
+        "name": "Video",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Video"
+          },
+          {
+            "type": "checkbox",
+            "label": "Autoplay",
+            "id": "autoplay",
+            "default": "false"
+          },
+          {
+            "type": "video",
+            "id": "video",
+            "label": "Video",
+            "info": "Learn what video formats Kajabi supports [here](supported_video_formats)."
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Suggested dimensions: 1856 × 1044",
+            "fit": "max",
+            "width": 2500,
+            "height": 2500
+          },
+          {
+            "type": "header",
+            "content": "Block Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      },
+      {
+        "type": "form",
+        "name": "Opt In Form",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Opt In Form"
+          },
+          {
+            "type": "rich_text",
+            "label": "Text",
+            "id": "text",
+            "default": "<h2>Opt In Form</h2><p>An Opt In Form is useful for collecting leads for your Kajabi site. Use this text to describe what the visitor is signing up for when they fill out this form.</p>"
+          },
+          {
+            "type": "form",
+            "id": "form",
+            "label": "Form",
+            "info": "Select the form you wish to use on this Landing Page.",
+            "allow_blank": true
+          },
+          {
+            "type": "action",
+            "id": "thank_you_url",
+            "label": "Thank You Page",
+            "info": "Leave this field blank to go to the default thank you page."
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text",
+            "default": "Submit"
+          },
+          {
+            "type": "header",
+            "content": "Form Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "color",
+            "id": "form_background_color",
+            "label": "Form Background Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "form_text_color",
+            "label": "Form Text Color",
+            "allow_blank": true
+          },
+          {
+            "type": "radio",
+            "label": "Input Label",
+            "id": "style",
+            "default": "placeholder",
+            "options": [
+              { "label": "Placeholder", "value": "placeholder" },
+              { "label": "Label", "value": "label" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "Button Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "block",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          },
+          {
+            "type": "header",
+            "content": "Block Appearance",
+            "style": "subheading"
+          },
+          {
+            "type": "radio",
+            "id": "alignment",
+            "label": "Alignment",
+            "default": "left",
+            "options": [
+              {"value": "left", "label": "Left"},
+              {"value": "center", "label": "Centered"},
+              {"value": "right", "label": "Right"}
+            ]
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      },
+      {
+        "type": "facebook",
+        "name": "Facebook Comments",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Facebook Comments"
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Container width",
+            "default": "col-md-6",
+            "options": [
+              { "value": "col-md-1", "label": "1/12" },
+              { "value": "col-md-2", "label": "2/12" },
+              { "value": "col-md-3", "label": "3/12" },
+              { "value": "col-md-4", "label": "4/12" },
+              { "value": "col-md-5", "label": "5/12" },
+              { "value": "col-md-6", "label": "6/12" },
+              { "value": "col-md-7", "label": "7/12" },
+              { "value": "col-md-8", "label": "8/12" },
+              { "value": "col-md-9", "label": "9/12" },
+              { "value": "col-md-10", "label": "10/12" },
+              { "value": "col-md-11", "label": "11/12" },
+              { "value": "col-md-12", "label": "12/12" }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "make_block",
+            "label": "Place this block on its own row.",
+            "default": "false"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": ""
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": ""
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Use Background Image",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_overlay",
+        "label": "Use Image Overlay",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image",
+        "info": "Suggested dimensions: 2880 × 1200. Learn more about how to properly use background images [here](premier_hero_bg_image).",
+        "fit": "max",
+        "width": 3000,
+        "height": 3000
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true,
+        "info": "Will be used as overlay if settings for background image selected. Use Opacity slider. Learn more about working with image overlays [here](image_overlay)"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "allow_blank": true,
+        "info": "Text color will change automatically based on the brightness of your background color. Use this setting if you would like to override with a custom color."
+      },
+      {
+        "type": "radio",
+        "id": "horizontal",
+        "label": "Horizontal Alignment",
+        "default": "center",
+        "options": [
+          { "label": "Left", "value": "left" },
+          { "label": "Center", "value": "center" },
+          { "label": "Right", "value": "right" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "vertical",
+        "label": "Vertical Alignment",
+        "default": "middle",
+        "options": [
+          { "label": "Top", "value": "top" },
+          { "label": "Middle", "value": "middle" },
+          { "label": "Bottom", "value": "bottom" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "large",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Time Reveal",
+        "style": "subheading"
+      },
+      {
+        "type": "event",
+        "id": "event_id",
+        "label": "Select Your Event",
+        "info": "If no event is selected the section will time reveal based on page load."
+      },
+      {
+        "type": "text",
+        "id": "section_reveal",
+        "label": "Offset",
+        "default": "",
+        "info": "If blank section will always be visable."
+      },
+      {
+        "type": "select",
+        "id": "section_offset_period",
+        "label": "Offset Time Period",
+        "default": "seconds",
+        "options": [
+          { "label": "Seconds", "value": "seconds" },
+          { "label": "Minutes", "value": "minutes" },
+          { "label": "Hours", "value": "hours" },
+          { "label": "Days", "value": "days" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Content",
+        "description": "Use this section to create your own layout—add text, images, videos, a call to action, or enter your own custom code.",
+        "category": "Content",
+        "blocks": [
+          { "type": "text" }
+        ]
+      },
+      {
+        "name": "Facebook Comments",
+        "description": "Add a comment section that will be linked to the user’s Facebook account.",
+        "category": "Content",
+        "blocks": [
+          { "type": "facebook",
+            "settings": {
+              "width": "col-md-12"
+            }
+          }
+        ],
+        "settings": {
+          "show_img": "false",
+          "background_color": "#ffffff",
+          "text_color": "#000000"
+        }
+      }
+    ]
+  }
+{% endschema %}

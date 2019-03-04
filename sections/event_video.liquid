@@ -1,0 +1,443 @@
+{% include "section_style", bgColor: settings.color_offset, vertAlign: "middle" %}
+
+<!-- Event Variables -->
+{% if section.settings.event_id %}
+  {% assign ev-ID           = current_site.find_event[section.settings.event_id] %}
+  {% assign ev-Date         = ev-ID.occurs_at | date: "%Y-%jT%T%:z" %}
+  {% assign ev-offset       = section.settings.event_offset_number %}
+  {% assign ev-offsetPer    = section.settings.event_offset_period %}
+{% endif %}
+
+<!-- Before Event Variables -->
+{% assign s-BeforeText      = section.settings.before_text %}
+{% assign s-Img             = section.settings.image | image_picker_url: 'placeholder.png' %}
+{% assign s-BgBefore        = section.settings.background_color_before %}
+{% assign s-TextBefore      = section.settings.text_color_before %}
+
+<!-- Join Event Variables -->
+{% assign s-JoinText        = section.settings.join_text %}
+{% assign s-BgJoin          = section.settings.background_color_join %}
+{% assign s-TextJoin        = section.settings.text_color_join %}
+{% assign btnId             = section.id %}
+{% assign btnSettingsId     = 'btn_text' | settings_id: section: section %}
+{% assign btnText           = section.settings.btn_text  %}
+{% assign btnColor          = section.settings.btn_background_color | default: settings.color_primary %}
+{% assign btnTextColor      = section.settings.btn_text_color | default: settings.text_color_light %}
+{% assign btnStyle          = section.settings.btn_style  %}
+{% assign btnWidth          = section.settings.btn_width  %}
+{% assign btnSize           = section.settings.btn_size  %}
+<style>
+  /*============================================================================
+    #Individual CTA Style
+  ==============================================================================*/
+  .btn--solid.btn--{{ btnId }} {
+    background: {{ btnColor }} !important;
+    border-color: {{ btnColor }} !important;
+    color: {{ btnTextColor }} !important;
+  }
+  .btn--solid.btn--{{ btnId }}:hover {
+    color: {{ btnTextColor }} !important;
+  }
+  .btn--outline.btn--{{ btnId }} {
+    border-color: {{ btnColor }} !important;
+    color: {{ btnColor }} !important;
+  }
+  .btn--outline.btn--{{ btnId }}:hover {
+    color: {{ btnColor }} !important;
+  }
+</style>
+
+<!-- During Event Variables -->
+{% if section.settings.video %}
+  {% assign v = current_site.find_video[section.settings.video] %}
+{% endif %}
+
+<!-- After Event Variables -->
+{% assign s-AfterText      = section.settings.after_text %}
+{% assign s-BgAfter        = section.settings.background_color_after %}
+{% assign s-TextAfter      = section.settings.text_color_after %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-BeforeText    = 'before_text' | settings_id: section: section %}
+{% assign kjb-BeforeBg      = 'background_color_before' | settings_id: section: section %}
+{% assign kjb-AfterText     = 'after_text' | settings_id: section: section %}
+{% assign kjb-AfterBg       = 'background_color_after' | settings_id: section: section %}
+{% assign kjb-JoinText     = 'join_text' | settings_id: section: section %}
+{% assign kjb-JoinBg       = 'background_color_join' | settings_id: section: section %}
+
+<style>
+  .section--{{ s-ID }} .event_video__item--before .event_video__box {
+    background: {{ s-BgBefore }} !important;
+  }
+  .section--{{ s-ID }} .event_video__item--before .event_video__box h2, .section--{{ s-ID }} .event_video__item--before .event_video__box h3, .section--{{ s-ID }} .event_video__item--before .event_video__box h4, .section--{{ s-ID }} .event_video__item--before .event_video__box h5, .section--{{ s-ID }} .event_video__item--before .event_video__box h6 {
+    color: {{ s-TextBefore }} !important;
+  }
+  .section--{{ s-ID }} .event_video__item--join .event_video__box {
+    background: {{ s-BgJoin }} !important;
+  }
+  .section--{{ s-ID }} .event_video__item--join .event_video__box h2, .section--{{ s-ID }} .event_video__item--join .event_video__box h3, .section--{{ s-ID }} .event_video__item--join .event_video__box h4, .section--{{ s-ID }} .event_video__item--join .event_video__box h5, .section--{{ s-ID }} .event_video__item--join .event_video__box h6 {
+    color: {{ s-TextJoin }} !important;
+  }
+  .section--{{ s-ID }} .event_video__item--after .event_video__box {
+    background: {{ s-BgAfter }} !important;
+  }
+  .section--{{ s-ID }} .event_video__item--after .event_video__box h2, .section--{{ s-ID }} .event_video__item--after .event_video__box h3, .section--{{ s-ID }} .event_video__item--after .event_video__box h4, .section--{{ s-ID }} .event_video__item--after .event_video__box h5, .section--{{ s-ID }} .event_video__item--after .event_video__box h6 {
+    color: {{ s-TextAfter }} !important;
+  }
+  .section--{{ s-ID }} .event_video__item.background-image {
+    background-image: url({{ s-Img }}) !important;
+  }
+</style>
+{% if editor %}
+  <style>
+    .section--event_video .event_video__item {
+      visibility: visible;
+      height: auto;
+      position: relative;
+    }
+    .section--event_video .event_video__item:before {
+      z-index: 9999;
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 10px 20px;
+      background: #2e91fc;
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+      width:200px;
+    }
+    .section--event_video .event_video__item--before:before {
+      content: "Shows Before Event"
+    }
+    .section--event_video .event_video__item--join:before {
+      content: "Shows At Event Start"
+    }
+    .section--event_video .event_video__item--during:before {
+      content: "Shows During Event"
+    }
+    .section--event_video .event_video__item--after:before {
+      content: "Shows After Event"
+    }
+  </style>
+{% endif %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div class="section section--event_video section--{{ s-VertAlign }} section--{{ s-HorAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "event_check", page: "e_video" %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Event Video",
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "Call To Action",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Call To Action"
+          },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "CTA Text",
+            "default": "Yes! I want the Special Offer"
+          },
+          {
+            "type": "action",
+            "id": "btn_action",
+            "label": "CTA Action",
+            "two_step": true,
+            "default": "http://www.kajabi.com"
+          },
+          {
+            "type": "checkbox",
+            "id": "btn_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "CTA Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_size",
+            "label": "CTA Size",
+            "default": "med",
+            "options": [
+              { "label": "Small", "value": "small" },
+              { "label": "Medium", "value": "med" },
+              { "label": "Large", "value": "large" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "auto",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "event",
+        "id": "event_id",
+        "label": "Select Your Event"
+      },
+      {
+        "type": "header",
+        "content": "Before Event",
+        "style": "subheading"
+      },
+      {
+        "type": "textarea",
+        "id": "before_text",
+        "label": "Before Event Text",
+        "default": "Stay Tuned! Your free training will begin in:"
+      },
+      {
+        "type": "text",
+        "id": "days_text",
+        "label": "Days",
+        "default": "DAYS"
+      },
+      {
+        "type": "text",
+        "id": "hours_text",
+        "label": "Hours",
+        "default": "HOURS"
+      },
+      {
+        "type": "text",
+        "id": "minutes_text",
+        "label": "Minutes",
+        "default": "MINS"
+      },
+      {
+        "type": "text",
+        "id": "seconds_text",
+        "label": "Seconds",
+        "default": "SECS"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Suggested dimensions: 1856 × 1044",
+        "fit": "max",
+        "width": 1856,
+        "height": 1044
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color_before",
+        "default": "rgba(0,0,0,.7)"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color_before",
+        "default": "#fff"
+      },
+      {
+        "type": "header",
+        "content": "Join Event",
+        "style": "subheading"
+      },
+      {
+        "type": "textarea",
+        "id": "join_text",
+        "label": "Join Event Text",
+        "default": "Welcome, Click below to join the live training."
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "CTA Text",
+        "default": "Enter Training Room"
+      },
+      {
+        "type": "radio",
+        "id": "btn_style",
+        "label": "CTA Style",
+        "default": "solid",
+        "options": [
+          { "label": "Solid", "value": "solid" },
+          { "label": "Outline", "value": "outline" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "btn_size",
+        "label": "CTA Size",
+        "default": "med",
+        "options": [
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "med" },
+          { "label": "Large", "value": "large" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "btn_width",
+        "label": "Button Width",
+        "default": "auto",
+        "options": [
+          { "label": "Auto", "value": "auto" },
+          { "label": "Full Width", "value": "block" }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "btn_background_color",
+        "label": "Button Color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "allow_blank": true,
+        "info": "For solid buttons only"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color_join",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color_join",
+        "default": "#000"
+      },
+      {
+        "type": "header",
+        "content": "During Event",
+        "style": "subheading"
+      },
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Video",
+        "info": "Learn what video formats Kajabi supports [here](supported_video_formats)."
+      },
+      {
+        "type": "header",
+        "content": "After Event",
+        "style": "subheading"
+      },
+      {
+        "type": "textarea",
+        "id": "after_text",
+        "label": "After Event Text",
+        "default": "Thanks for attending the training! Click the button below to take advantage of this special offer!"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color_after",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color_after",
+        "default": "#000"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true,
+        "info": "Will be used as overlay if settings for background image selected. Use Opacity slider. Learn more about working with image overlays [here](image_overlay)"
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Event Offset",
+        "style": "subheading"
+      },
+      {
+        "type": "text",
+        "id": "event_offset_number",
+        "label": "Event Offset",
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "event_offset_period",
+        "label": "Event Offset Time Period",
+        "default": "seconds",
+        "options": [
+          { "label": "Seconds", "value": "seconds" },
+          { "label": "Minutes", "value": "minutes" },
+          { "label": "Hours", "value": "hours" },
+          { "label": "Days", "value": "days" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Event Video",
+        "description": "Use this section to host your Event Video and curate the experience before, during, and after the Event.",
+        "category": "Content",
+        "blocks": [
+          { "type": "cta" }
+        ]
+      }
+    ]
+  }
+{% endschema %}

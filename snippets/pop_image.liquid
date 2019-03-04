@@ -1,0 +1,11 @@
+{% if block.settings.img_width != "" %}
+  {% assign imgWidth = block.settings.img_width | remove: "px" | append: "px" %}
+  <style>
+    .block--{{ block.id }} img {
+      width: {{ imgWidth }};
+    }
+  </style>
+{% endif %}
+<div kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}">
+  <img src="{{ block.settings.image | image_picker_url: 'placeholder.png'}}" class="img-fluid" kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}"/>
+</div>

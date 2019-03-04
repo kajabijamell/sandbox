@@ -1,0 +1,35 @@
+{% include "custom_block_style" %}
+
+<!-- Block Variables -->
+{% assign b-Autoplay   = block.settings.autoplay %}
+{% assign b-Video      = current_site.find_video[block.settings.video] %}
+{% assign b-VideoImage = block.settings.image | image_picker_url: 'video.png' %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Video    = 'video' | settings_id: section: section, block: block %}
+
+{% unless b-Autoplay %}
+  <style>
+    .block--{{ b-ID }} .video__wrapper {
+      background-image: url({{ videoImg }});
+    }
+  </style>
+{% endunless %}
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>
+
+<div class="{{ b-Width }} block--{{ b-ID }}">
+  <div class="video" kjb-settings-id="{{ kjb-Video }}">
+    <div class="video__wrapper">
+      {% if b-Video %}
+        {{ b-Video | wistia_video: player_color: settings.color_primary, auto_play: b-Autoplay, still_url: b-VideoImage, playerPreference: "html5" }}
+      {% else %}
+        <img src="{{ b-VideoImage }}" class="img-fluid" kjb-settings-id="{{ kjb-Video }}"/>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>

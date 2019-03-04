@@ -1,0 +1,85 @@
+{% include "section_style", bgColor: settings.color_offset, vertAlign: "middle" %}
+
+<!-- Section Variables -->
+{% assign s-Code   = section.settings.code %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Code = 'code' | settings_id: section: section %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--video_embed section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "section_heading" %}
+      <div class="row">
+        <div class="col-md-10">
+          <div class="embed-wrapper" kjb-settings-id="{{ kjb-Code }}">
+            {{ s-Code }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Video Embed",
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": ""
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": ""
+      },
+      {
+        "type": "textarea",
+        "label": "Code",
+        "id": "code",
+        "default": "<iframe src='https://www.youtube.com/embed/eLOidvMagl4' frameborder='0' allowfullscreen></iframe>"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Embed",
+        "description": "Use this section to embed videos hosted on other services like Vimeo and YouTube",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

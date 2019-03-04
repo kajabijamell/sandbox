@@ -1,0 +1,21 @@
+{% if page == "e_video" %}
+  {% if ev-ID %}
+    {% include "event_video" %}
+  {% else %}
+    {% if editor %}
+      <div class="editor-null" kjb-settings-id="{{ 'event_id' | settings_id: section: section }}">
+        <h5>Heads up! You have not selected an event yet.</h5>
+      </div>
+    {% endif %}
+  {% endif %}
+{% else %}
+  {% if e-ID %}
+    {% include "event_info" %}
+  {% else %}
+    {% if editor %}
+      <div class="editor-null" kjb-settings-id="{{ 'event_id' | settings_id: section: section }}">
+        <h5>Heads up! You have not selected an event yet.</h5>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endif %}

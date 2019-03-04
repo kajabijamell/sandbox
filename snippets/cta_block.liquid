@@ -1,0 +1,43 @@
+{% assign btnId                = block.id %}
+{% assign btnSettingsId        = 'btn_action' | settings_id: section: section, block: block %}
+{% assign btnAction            = block.settings.btn_action  %}
+{% assign btnText              = block.settings.btn_text  %}
+{% assign btnColor             = block.settings.btn_background_color | default: settings.color_primary %}
+{% assign btnTextColor         = block.settings.btn_text_color | default: settings.text_color_light %}
+{% assign btnStyle             = block.settings.btn_style  %}
+{% assign btnWidth             = block.settings.btn_width  %}
+{% assign btnSize              = block.settings.btn_size  %}
+{% assign btnTarget            = block.settings.btn_target %}
+{% assign btnOffsetNumber      = block.settings.btn_Reveal %}
+{% assign btnOffsetPeriod      = block.settings.btn_offset_period %}
+{% if section.settings.event_id %}
+  {% assign btnOffsetEvent     = current_site.find_event[block.settings.event_id] %}
+  {% assign btnOffsetEventDate = btnOffsetEvent.occurs_at | date: "%Y-%jT%T%:z" %}
+{% endif %}
+{% if btnTarget %}
+  {% assign btnTarget = "_blank" %}
+{% else %}
+  {% assign btnTarget = "" %}
+{% endif %}
+
+<style>
+  /*============================================================================
+    #Individual CTA Style
+  ==============================================================================*/
+  .btn--solid.btn--{{ btnId }} {
+    background: {{ btnColor }} !important;
+    border-color: {{ btnColor }} !important;
+    color: {{ btnTextColor }} !important;
+  }
+  .btn--solid.btn--{{ btnId }}:hover {
+    color: {{ btnTextColor }} !important;
+  }
+  .btn--outline.btn--{{ btnId }} {
+    border-color: {{ btnColor }} !important;
+    color: {{ btnColor }} !important;
+  }
+  .btn--outline.btn--{{ btnId }}:hover {
+    color: {{ btnColor }} !important;
+  }
+</style>
+<a href="{{ btnAction }}" class="btn btn-cta btn--{{ btnWidth }} btn--{{ btnStyle }} btn--{{ btnSize }} btn--{{ btnId }}" data-offset-number="{{ btnOffsetNumber }}" data-offset-period="{{ btnOffsetPeriod }}" data-event="{{ btnOffsetEventDate }}" id="" kjb-settings-id="{{ btnSettingsId }}" target="{{ btnTarget }}">{{ btnText }}</a>

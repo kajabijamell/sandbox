@@ -1,0 +1,184 @@
+{% include "section_style", bgColor: "#ffffff", vertAlign: "top" %}
+{% assign s-LabelColor  = section.settings.label_color | default: "" %}
+{% assign s-ActiveLabelColor  = section.settings.border_color | default: "" %}
+<style>
+  {% if s-LabelColor != "" %}
+    .section--{{ s-ID }} .multi_video--label {
+      color: {{ s-LabelColor }};
+    }
+  {% endif %}
+  {% if s-ActiveLabelColor != "" %}
+    .section--{{ s-ID }} .multi_video-active .multi_video--label {
+      color: {{ s-ActiveLabelColor }};
+    }
+  {% endif %}
+  {% if s-TextColor != "" %}
+    .section--{{ s-ID }}.section--light a, .section--{{ s-ID }}.section--light a:hover, .section--{{ s-ID }}.section--light a:not([href]):not([tabindex]) {
+      color: {{ s-TextColor }};
+    }
+    .section--{{ s-ID }}.section--dark a, .section--{{ s-ID }}.section--dark a:hover, .section--{{ s-ID }}.section--dark a:not([href]):not([tabindex]) {
+      color: {{ s-TextColor }};
+    }
+  {% endif %}
+</style>
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--multi_video section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      <div class="row video_scroller">
+        {% assign count = 0 %}
+        {% for block in section.blocks %}
+          {% include "multi_video_video" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Multi Video Launch",
+    "blocks": [
+      {
+        "type": "multi_video_video",
+        "name": "Video",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Video"
+          },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "radio",
+            "id": "state",
+            "label": "Video State",
+            "default": "locked",
+            "options": [
+              { "label": "Locked", "value": "locked" },
+              { "label": "Active", "value": "active" },
+              { "label": "Clickable", "value": "click" }
+            ]
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "fit": "crop",
+            "width": 400,
+            "height": 225,
+            "info": "Suggested dimensions: 400 × 225"
+          },
+          {
+            "type": "text",
+            "label": "Label",
+            "id": "label",
+            "default": "Add a label"
+          },
+          {
+            "type": "text",
+            "label": "Title",
+            "id": "title",
+            "default": "Add a title"
+          },
+          {
+            "type": "action",
+            "id": "action_link",
+            "label": "Action",
+            "two_step": true,
+            "default": ""
+          },
+          {
+            "type": "checkbox",
+            "id": "link_target",
+            "label": "Open In New Window",
+            "default": "false"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "checkbox",
+        "id": "show_icon",
+        "label": "Show Icons",
+        "default": "true"
+      },
+      {
+        "type": "color",
+        "label": "Label Color Override",
+        "id": "label_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Active Label Color Override",
+        "id": "border_color",
+        "allow_blank": true
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "small",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Multi Video Launch",
+        "description": "Use this section to showcase a series of videos marketing a product launch or new offer.",
+        "category": "Content",
+        "blocks": [
+          { "type": "multi_video_video",
+            "settings": {
+              "state": "click",
+              "label": "Video #1:"
+            }
+          },
+          { "type": "multi_video_video",
+            "settings": {
+              "state": "active",
+              "label": "Video #2:"
+            }
+          },
+          { "type": "multi_video_video",
+            "settings": {
+              "state": "locked",
+              "label": "Video #3:"
+            }
+          },
+          { "type": "multi_video_video",
+            "settings": {
+              "state": "locked",
+              "label": "Video #4:"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,15 @@
+<div class="blog_post">
+  {% if s-ShowImg %}
+    {% if post.image_url %}
+      <a href="{{ post.url }}"><img class="blog_post__img img-fluid" src="{{ post.image_url }}"></a>
+    {% else %}
+      <a href="{{ post.url }}"><img class="blog_post__img img-fluid" src="{{ 'placeholder.png' | asset_url }}"></a>
+    {% endif %}
+  {% endif %}
+  {% if s-ShowDate %}
+    <h6 class="blog_post__date"><em>{{ post.created_at | date: "%b %d, 20%y" }}</em></h6>
+    <h4 class="blog_post__title"><a href="{{ post.url }}">{{ post.title | truncate: 70 }}</a></h4>
+  {% else %}
+    <h4 class="blog_post__title blog_post__title--solo"><a href="{{ post.url }}">{{ post.title | truncate: 70 }}</a></h4>
+  {% endif %}
+</div>

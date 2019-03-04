@@ -1,0 +1,129 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "middle" %}
+
+<!-- Section Variables -->
+{% assign s-Img       = section.settings.image | image_picker_url: 'image.png' %}
+{% assign s-ImgWidth  = section.settings.img_width %}
+{% assign s-ImgAction = section.settings.img_action %}
+{% assign s-Target    = section.settings.link_target %}
+{% if s-Target %}
+  {% assign s-Target  = "_blank" %}
+{% else %}
+  {% assign s-Target  = "" %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Image = 'image' | settings_id: section: section %}
+
+{% if s-ImgWidth != "" %}
+  {% assign imgWidth = s-ImgWidth | remove: "px" | append: "px" %}
+  <style>
+    .section--{{ s-ID }} img {
+      width: {{ imgWidth }};
+    }
+  </style>
+{% endif %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--img section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "section_heading" %}
+      <div class="row">
+        <div class="col-md-10">
+          {% if s-ImgAction == "" %}
+            <img src="{{ s-Img }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+          {% else %}
+            <a href="{{ s-ImgAction }}" target="{{ s-Target }}">
+              <img src="{{ s-Img }}" class="img-fluid" kjb-settings-id="{{ kjb-Image }}"/>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Image",
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Image"
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "Imagery can be used to show off your brand or product. You can optionally link your image to another page."
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "width": 2500,
+        "height": 2500,
+        "info": "Suggested dimensions: 1856 × 1044"
+      },
+      {
+        "type": "action",
+        "id": "img_action",
+        "label": "Image Action",
+        "anchor": true,
+        "two_step": true,
+        "default": ""
+      },
+      {
+        "type": "checkbox",
+        "id": "link_target",
+        "label": "Open In New Window",
+        "default": "false"
+      },
+      {
+        "type": "text",
+        "id": "img_width",
+        "label": "Custom Image Width",
+        "info": "You may use the format 10px or simply 10. If left blank your image will take its natural width with a max width of 100%.",
+        "default": ""
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image",
+        "description": "Add a visual to showcase your brand or product.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

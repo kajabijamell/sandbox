@@ -1,0 +1,21 @@
+<!-- Block Variables -->
+{% assign b-ID         = block.id %}
+{% assign b-Trigger    = block.settings.accordion_trigger %}
+{% assign b-Body       = block.settings.accordion_body %}
+{% assign b-Color      = block.settings.background_color | default: "#fff" %}
+{% assign b-Text_color = block.settings.text_color %}
+
+{% assign kjb-Trigger = 'accordion_trigger' | settings_id: section: section, block: block %}
+{% assign kjb-Body    = 'accordion_body' | settings_id: section: section, block: block %}
+
+<div class="accordion__item panel section--{{ b-Color | color_scheme_class }}" style="background: {{ b-Color }};">
+  <a class="accordion__title" data-toggle="collapse" href="#accordion-item-{{ b-ID }}" aria-expanded="false" aria-controls="accordion-item-{{ b-ID }}" kjb-settings-id="{{ kjb-Trigger }}" style="color:{{ b-Text_color }};">
+    <i class="accordion__icon"></i>
+    {{ b-Trigger }}
+  </a>
+  <div class="collapse show" id="accordion-item-{{ b-ID }}" role="tabpanel" data-parent="#accordion-{{ s-ID }}">
+    <div class="accordion__body" kjb-settings-id="{{ kjb-Body }}" style="color:{{ b-Text_color }};">
+      {{ b-Body }}
+    </div>
+  </div>
+</div>

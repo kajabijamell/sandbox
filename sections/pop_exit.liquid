@@ -1,0 +1,246 @@
+{% assign color = section.settings.background_color | default: "#fff" %}
+{% if section.settings.show %}
+  {% if editor %}
+    <style>
+      body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: fixed;
+      }
+      .pop__close {
+        display: none;
+      }
+    </style>
+    {% assign display = "inline-block" %}
+  {% endif %}
+{% else %}
+  {% assign display = "none" %}
+{% endif %}
+
+{% if editor %}
+  <div id="exit-pop" class="pop pop--{{ color | color_scheme_class }}" style="display: {{ display }};" data-timed-reveal="{{ section.settings.popup_reveal }}" data-cookie-expire="{{ section.settings.frequency }}">
+    <div class="pop__content">
+      <div class="pop__inner">
+        <div class="pop__body" style="background: {{ color }}">
+          <a class="pop__close">
+            Close
+          </a>
+          {% if section.settings.show_img %}
+            <img src="{{ section.settings.image | image_picker_url: 'exit_pop.jpg'}}" class="img-fluid" kjb-settings-id="{{ 'image' | settings_id: section: section }}"/>
+          {% endif %}
+          <div class="pop__body--inner">
+            <div kjb-settings-id="{{ 'text' | settings_id: section: section }}">
+              {{ section.settings.text }}
+            </div>
+            {% for block in section.blocks %}
+              {% include "cta_block" %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  {% if section.settings.enabled %}
+    <div id="exit-pop" class="pop pop--{{ color | color_scheme_class }}" style="display: {{ display }};" data-timed-reveal="{{ section.settings.popup_reveal }}" data-cookie-expire="{{ section.settings.frequency }}">
+      <div class="pop__content">
+        <div class="pop__inner">
+          <div class="pop__body" style="background: {{ color }}">
+            <a class="pop__close">
+              Close
+            </a>
+            {% if section.settings.show_img %}
+              <img src="{{ section.settings.image | image_picker_url: 'exit_pop.jpg'}}" class="img-fluid" kjb-settings-id="{{ 'image' | settings_id: section: section }}"/>
+            {% endif %}
+            <div class="pop__body--inner">
+              <div kjb-settings-id="{{ 'text' | settings_id: section: section }}">
+                {{ section.settings.text }}
+              </div>
+              {% for block in section.blocks %}
+                {% include "cta_block" %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Exit Popup",
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "Call To Action",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Call To Action"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "CTA Text",
+            "default": "Buy now"
+          },
+          {
+            "type": "action",
+            "id": "btn_action",
+            "label": "CTA Action",
+            "two_step": true,
+            "default": "http://www.kajabi.com"
+          },
+          {
+            "type": "checkbox",
+            "id": "btn_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "CTA Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_size",
+            "label": "CTA Size",
+            "default": "med",
+            "options": [
+              { "label": "Small", "value": "small" },
+              { "label": "Medium", "value": "med" },
+              { "label": "Large", "value": "large" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "auto",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          },
+          {
+            "type": "header",
+            "content": "Time Reveal",
+            "style": "subheading"
+          },
+          {
+            "type": "text",
+            "id": "btn_Reveal",
+            "label": "Offset",
+            "info": "Must be a value greater than 0",
+            "default": ""
+          },
+          {
+            "type": "select",
+            "id": "btn_offset_period",
+            "label": "Offset Time Period",
+            "default": "seconds",
+            "options": [
+              { "label": "Seconds", "value": "seconds" },
+              { "label": "Minutes", "value": "minutes" },
+              { "label": "Hours", "value": "hours" },
+              { "label": "Days", "value": "days" }
+            ]
+          },
+          {
+            "type": "event",
+            "id": "event_id",
+            "label": "Select Your Event"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "checkbox",
+        "id": "show",
+        "label": "Edit Popup",
+        "default": "false",
+        "info": "Toggle this to show your popup in the editor. Make sure to uncheck this before you finish editing. Learn more [here](premier_pops)."
+      },
+      {
+        "type": "checkbox",
+        "id": "enabled",
+        "label": "Enable Popup",
+        "default": "false",
+        "info": "Toggle this to use this popup as an exit popup on your landing page."
+      },
+      {
+        "type": "text",
+        "id": "popup_reveal",
+        "label": "Timed Reveal",
+        "default": "0",
+        "info": "Use seconds. (For example, 5 minutes x 60 seconds = 300 seconds). The popup will show on exit intent or when the timer finishes, whichever occurs first."
+      },
+      {
+        "type": "text",
+        "id": "frequency",
+        "label": "Frequency (days)",
+        "default": "10",
+        "info": "Don't show the popup to return visitors for this many days."
+      },
+      {
+        "type": "header",
+        "content": "Popup Content",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Show Image",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Suggested dimensions: 1200 × 600",
+        "fit": "max",
+        "width": 2400,
+        "height": 2400
+      },
+      {
+        "type": "rich_text",
+        "label": "Text",
+        "id": "text",
+        "default": "<h2>Claim your amazing discount today.</h2>"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true
+      }
+    ]
+  }
+{% endschema %}

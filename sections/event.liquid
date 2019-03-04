@@ -1,0 +1,356 @@
+{% include "section_style", bgColor: "rgba(0,0,0,.7)", defaultImg: "event.jpg", vertAlign: "middle", bgImage: true %}
+
+<!-- Event Variables -->
+{% if section.settings.event_id %}
+  {% assign e-ID           = current_site.find_event[section.settings.event_id] %}
+  {% assign e-Date         = e-ID.occurs_at | date: "%Y-%jT%T%:z" %}
+{% endif %}
+{% assign e-DateFormat   = section.settings.format %}
+{% assign e-ShowYear     = section.settings.show_year %}
+{% assign e-ShowTime     = section.settings.show_time %}
+{% assign e-ShowTimezone = section.settings.show_timezone %}
+{% assign e-offset       = section.settings.event_offset_number %}
+{% assign e-offsetPer    = section.settings.event_offset_period %}
+
+<!-- Countdown Variables -->
+{% assign c-Show         = section.settings.show_countdown %}
+{% assign c-NumberColor  = section.settings.number_color | default: "" %}
+{% assign c-Style        = section.settings.style %}
+{% assign c-EndAction    = section.settings.countdown_end_action %}
+{% assign c-EndActionUse = section.settings.countdown_end_action_use %}
+{% assign c-Days         = section.settings.days_text %}
+{% assign c-Hours        = section.settings.hours_text %}
+{% assign c-Minutes      = section.settings.minutes_text %}
+{% assign c-Seconds      = section.settings.seconds_text %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-End        = 'countdown_end_time' | settings_id: section: section %}
+{% assign kjb-Days       = 'days_text' | settings_id: section: section %}
+{% assign kjb-Hours      = 'hours_text' | settings_id: section: section %}
+{% assign kjb-Minutes    = 'minutes_text' | settings_id: section: section %}
+{% assign kjb-Seconds    = 'seconds_text' | settings_id: section: section %}
+{% assign kjb-EventId    = 'event_id' | settings_id: section: section %}
+
+{% if c-NumberColor != "" %}
+  <style>
+    .section--{{ s-ID }} .countdown__amount, .section--{{ s-ID }} .countdown--card .countdown__amount {
+      color: {{ c-NumberColor }};
+    }
+  </style>
+{% endif %}
+
+<div class="background-image background-image--{{ s-ID }} {{ s-SplashWrapper }}">
+  <div id="" class="section section--countdown section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "event_check", page: "e_info" %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Event",
+    "blocks": [
+      {
+        "type": "cta",
+        "name": "Call To Action",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Call To Action"
+          },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "text",
+            "id": "btn_text",
+            "label": "CTA Text",
+            "default": "CALL TO ACTION"
+          },
+          {
+            "type": "action",
+            "id": "btn_action",
+            "label": "CTA Action",
+            "two_step": true,
+            "default": "http://www.kajabi.com"
+          },
+          {
+            "type": "checkbox",
+            "id": "btn_target",
+            "label": "Open In New Window",
+            "default": "false"
+          },
+          {
+            "type": "radio",
+            "id": "btn_style",
+            "label": "CTA Style",
+            "default": "solid",
+            "options": [
+              { "label": "Solid", "value": "solid" },
+              { "label": "Outline", "value": "outline" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_size",
+            "label": "CTA Size",
+            "default": "med",
+            "options": [
+              { "label": "Small", "value": "small" },
+              { "label": "Medium", "value": "med" },
+              { "label": "Large", "value": "large" }
+            ]
+          },
+          {
+            "type": "radio",
+            "id": "btn_width",
+            "label": "Button Width",
+            "default": "auto",
+            "options": [
+              { "label": "Auto", "value": "auto" },
+              { "label": "Full Width", "value": "block" }
+            ]
+          },
+          {
+            "type": "color",
+            "id": "btn_background_color",
+            "label": "Button Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "btn_text_color",
+            "label": "Button Text Color",
+            "allow_blank": true,
+            "info": "For solid buttons only"
+          },
+          {
+            "type": "header",
+            "content": "Time Reveal",
+            "style": "subheading"
+          },
+          {
+            "type": "text",
+            "id": "btn_Reveal",
+            "label": "Offset",
+            "info": "Must be a value greater than 0",
+            "default": ""
+          },
+          {
+            "type": "select",
+            "id": "btn_offset_period",
+            "label": "Offset Time Period",
+            "default": "seconds",
+            "options": [
+              { "label": "Seconds", "value": "seconds" },
+              { "label": "Minutes", "value": "minutes" },
+              { "label": "Hours", "value": "hours" },
+              { "label": "Days", "value": "days" }
+            ]
+          },
+          {
+            "type": "event",
+            "id": "event_id",
+            "label": "Select Your Event"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "event",
+        "id": "event_id",
+        "label": "Select Your Event"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Event Section"
+      },
+      {
+        "type": "rich_text",
+        "id": "description",
+        "label": "Description",
+        "default": "A countdown timer is used to convey urgency to visitors. Large numbers and small text to show when an offer is going to end or when an event is going to take place."
+      },
+      {
+        "type": "radio",
+        "id": "format",
+        "label": "Date Format",
+        "default": "dddd, MMMM D",
+        "options": [
+          { "label": "Monday, December 15", "value": "dddd, MMMM D" },
+          { "label": "December 15", "value": "MMMM D" },
+          { "label": "Mon, Dec 15", "value": "ddd, MMM D" },
+          { "label": "Dec 15", "value": "MMM D" },
+          { "label": "None", "value": "none" }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_year",
+        "label": "Show Year",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_time",
+        "label": "Show Time",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_timezone",
+        "label": "Show Timezone",
+        "default": "true"
+      },
+      {
+        "type": "header",
+        "content": "Countdown Timer",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_countdown",
+        "label": "Show Countdown Timer",
+        "default": "true"
+      },
+      {
+        "type": "text",
+        "id": "days_text",
+        "label": "Days",
+        "default": "DAYS"
+      },
+      {
+        "type": "text",
+        "id": "hours_text",
+        "label": "Hours",
+        "default": "HOURS"
+      },
+      {
+        "type": "text",
+        "id": "minutes_text",
+        "label": "Minutes",
+        "default": "MINS"
+      },
+      {
+        "type": "text",
+        "id": "seconds_text",
+        "label": "Seconds",
+        "default": "SECS"
+      },
+      {
+        "type": "checkbox",
+        "id": "countdown_end_action_use",
+        "label": "Use After Countdown Action",
+        "default": "false"
+      },
+      {
+        "type": "action",
+        "id": "countdown_end_action",
+        "label": "At Countdown End",
+        "default": "http://www.kajabi.com"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "radio",
+        "id": "style",
+        "label": "Countdown Style",
+        "default": "card",
+        "options": [
+          { "label": "Minimal", "value": "" },
+          { "label": "Boxed", "value": "boxed" },
+          { "label": "Card", "value": "card" }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Use Background Image",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_overlay",
+        "label": "Use Image Overlay",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background Image",
+        "info": "Suggested dimensions: 2880 × 1200. Learn more about how to properly use background images [here](premier_hero_bg_image).",
+        "fit": "max",
+        "width": 3000,
+        "height": 3000
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Number Color Override",
+        "id": "number_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Event Offset",
+        "style": "subheading"
+      },
+      {
+        "type": "text",
+        "id": "event_offset_number",
+        "label": "Event Offset",
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "event_offset_period",
+        "label": "Event Offset Time Period",
+        "default": "seconds",
+        "options": [
+          { "label": "Seconds", "value": "seconds" },
+          { "label": "Minutes", "value": "minutes" },
+          { "label": "Hours", "value": "hours" },
+          { "label": "Days", "value": "days" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Event",
+        "description": "Showcase an upcoming Event using a countdown timer or a call to action leading to the registration page.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,23 @@
+{% include "custom_block_style" %}
+
+<!-- Block Variables -->
+{% assign b-Text   = block.settings.text %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Text = 'text' | settings_id: section: section, block: block %}
+{% assign kjb-CTA = 'cta' | settings_id: section: section, block: block %}
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>
+<div class="{{ b-Width }} block--{{ b-ID }}">
+  {% if b-Text != "" %}
+    <div kjb-settings-id="{{ kjb-Text }}">
+      {{ b-Text }}
+    </div>
+  {% endif %}
+  <div kjb-settings-id="{{ kjb-CTA }}">
+    {% include "cta_block" %}
+  </div>
+</div>
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>

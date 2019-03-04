@@ -1,0 +1,296 @@
+{% assign f-BgColor       = section.settings.background_color | default: settings.color_darker %}
+{% assign f-TextColor     = section.settings.text_color | default: "" %}
+{% assign f-AutoTextColor = f-BgColor | color_scheme_class %}
+
+<style>
+  .footer {
+    background: {{ f-BgColor }};
+  }
+  {% if f-TextColor != "" %}
+    .footer, .footer--dark a, .footer--dark a:hover, .footer--dark a:not([href]):not([tabindex]) {
+      color: {{ f-TextColor }};
+    }
+    .footer, .footer--light a, .footer--light a:hover, .footer--light a:not([href]):not([tabindex]) {
+      color: {{ f-TextColor }};
+    }
+  {% endif %}
+</style>
+
+{% if section.settings.show_footer %}
+  {% assign containerColor = settings.color_container_bg | default: f-BgColor %}
+  {% if settings.v_align == "top" %}
+    <style>
+      .container--main {
+        background: {{ containerColor }};
+      }
+    </style>
+  {% endif %}
+  <footer class="footer footer--{{ f-AutoTextColor }} footer--{{ section.settings.align_logo }}" kjb-settings-id="{{ 'background_color' | settings_id: section: section }}">
+    <div class="container">
+      <div class="footer__text-container">
+        {% if section.settings.show_logo %}
+          <img src="{{ section.settings.logo | image_picker_url: 'logo.png'}}" class="logo footer__logo" kjb-settings-id="{{ 'logo' | settings_id: section: section }}"/>
+        {% endif %}
+        {% if section.settings.show_copyright %}
+          <span kjb-settings-id="{{ 'copyright' | settings_id: section: section }}" class="footer__copyright">&copy; {{ 'now' | date: "%Y" }} {{ section.settings.copyright }}</span>
+        {% endif %}
+        {% if current_site.display_powered_by_link? %}
+          <div class="footer__powered-by">
+            {{ powered_by_link }}
+          </div>
+        {% endif %}
+        {% if section.settings.show_menu %}
+          <div kjb-settings-id="{{ 'menu' | settings_id: section: section }}" class="footer__menu">
+            {% for link in current_site.link_lists[section.settings.menu].links %}
+              <a class="footer__menu-item" href="{{ link.url }}">{{ link.name }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      {% include "social_icons" %}
+    </div>
+  </footer>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Footer",
+    "elements": [
+      {
+        "type": "checkbox",
+        "id": "show_footer",
+        "label": "Show Footer",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_copyright",
+        "label": "Show Copyright",
+        "default": "true"
+      },
+      {
+        "type": "text",
+        "id": "copyright",
+        "label": "Copyright",
+        "default": "Kajabi"
+      },
+      {
+        "type": "header",
+        "content": "Logo",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_logo",
+        "label": "Show Logo",
+        "default": "false"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo Image",
+        "fit": "max",
+        "width": 1000,
+        "height": 1000,
+        "info": "Suggested dimensions: 360x80"
+      },
+      {
+        "type": "header",
+        "content": "Menu",
+        "style": "subheading"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_menu",
+        "label": "Show Menu",
+        "default": "true"
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Menu",
+        "info": "The menu at the bottom footer.",
+        "default": "footer"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color",
+        "id": "text_color",
+        "allow_blank": true,
+        "info": "Text color will change automatically based on the brightness of your background color. Use this setting if you would like to override with a custom color."
+      },
+      {
+        "type": "radio",
+        "id": "align_logo",
+        "label": "Alignment",
+        "default": "left",
+        "options": [
+          {"value": "left", "label": "Inline"},
+          {"value": "center", "label": "Stacked"}
+        ]
+      },
+      {
+        "type": "header",
+        "id": "social_icons",
+        "content": "Social Icons",
+        "style": "subheading",
+        "info": "Link to your social media accounts. Leaving a field blank will hide that icon. Please use the full URL, for example, https://www.facebook.com/kajabi"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_icons",
+        "label": "Show Social Icons",
+        "default": "true"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_target",
+        "label": "Open In New Window",
+        "default": "false"
+      },
+      {
+        "type": "select",
+        "id": "social_icon_background_style",
+        "label": "Social Icon Background Style",
+        "default": "social-icons--none",
+        "options": [
+          { "label": "Round", "value": "social-icons--round" },
+          { "label": "Square", "value": "social-icons--square" },
+          { "label": "None", "value": "social-icons--none" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "social_icon_alignment",
+        "label": "Social Icon Alignment",
+        "default": "social-icons--left",
+        "options": [
+          { "label": "Left", "value": "social-icons--left" },
+          { "label": "Center", "value": "social-icons--center" },
+          { "label": "Right", "value": "social-icons--right" }
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Social Icon Color",
+        "id": "social_icons_text_color",
+        "allow_blank": true,
+        "info": "Change the color for the social icons."
+      },
+      {
+        "type": "color",
+        "label": "Social Icon Background Color",
+        "id": "social_icons_background_color",
+        "allow_blank": true,
+        "info": "Change the background color for the social icon containers."
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_facebook",
+        "label": "Facebook",
+        "default": "https://www.facebook.com/kajabi"
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_twitter",
+        "label": "Twitter",
+        "default": "https://www.twitter.com/kajabi"
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_instagram",
+        "label": "Instagram",
+        "default": "https://www.instagram.com/kajabi/"
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_youtube",
+        "label": "YouTube",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_pinterest",
+        "label": "Pinterest",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_google_plus",
+        "label": "Google Plus",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_vimeo",
+        "label": "Vimeo",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_github",
+        "label": "Github",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_itunes",
+        "label": "iTunes",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_linkedin",
+        "label": "LinkedIn",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_soundcloud",
+        "label": "Soundcloud",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_yelp",
+        "label": "Yelp",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_tumblr",
+        "label": "Tumblr",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_slack",
+        "label": "Slack",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_flickr",
+        "label": "Flickr",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_icon_link_dribbble",
+        "label": "Dribbble",
+        "default": ""
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,20 @@
+<!-- Block Variables -->
+{% assign b-Img       = block.settings.slideshow_img | image_picker_url: 'placeholder.png' %}
+{% assign b-ImgAction = block.settings.img_action %}
+{% assign b-Target    = block.settings.link_target %}
+{% if b-Target %}
+  {% assign b-Target  = "_blank" %}
+{% else %}
+  {% assign b-Target  = "" %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Image   = 'slideshow_img' | settings_id: section: section, block: block %}
+
+{% if b-ImgAction == "" %}
+  <img src="{{ b-Img }}" kjb-settings-id="{{ kjb-Image }}">
+{% else %}
+  <a href="{{ b-ImgAction }}" target="{{ b-Target }}">
+    <img src="{{ b-Img }}" kjb-settings-id="{{ kjb-Image }}">
+  </a>
+{% endif %}

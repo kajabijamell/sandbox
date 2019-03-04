@@ -1,0 +1,130 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "middle" %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--slideshow section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "section_heading" %}
+      <div class="row">
+        <div class="col-md-10">
+          <div id="carousel-example-generic--{{ s-ID }}" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              {% for block in section.blocks %}
+                {% if forloop.first == true %}
+                  <li data-target="#carousel-example-generic--{{ s-ID }}" data-slide-to="{{ forloop.index0 }}" class="active"></li>
+                {% else %}
+                  <li data-target="#carousel-example-generic--{{ s-ID }}" data-slide-to="{{ forloop.index0 }}"></li>
+                {% endif %}
+              {% endfor %}
+            </ol>
+            <div class="carousel-inner" role="listbox">
+              {% for block in section.blocks %}
+                {% if forloop.first == true %}
+                  <div class="carousel-item active">
+                    {% include "slideshow_image" %}
+                  </div>
+                {% else %}
+                  <div class="carousel-item">
+                    {% include "slideshow_image" %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Slideshow",
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "elements": [
+          {
+            "type": "image_picker",
+            "id": "slideshow_img",
+            "label": "Image",
+            "info": "Suggested dimensions: 1856 × 1044",
+            "fit": "max",
+            "width": 1856,
+            "height": 1044
+          },
+          {
+            "type": "action",
+            "id": "img_action",
+            "label": "Image Action",
+            "anchor": true,
+            "two_step": true,
+            "default": ""
+          },
+          {
+            "type": "checkbox",
+            "id": "link_target",
+            "label": "Open In New Window",
+            "default": "false"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Slideshow"
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "A Slideshow is a great way to showcase screenshots of your product or photos related to your products."
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slideshow",
+        "description": "Add visuals to bring attention to your different products and offers.",
+        "category": "Content",
+        "blocks": [
+          { "type": "slide", "settings": { } },
+          { "type": "slide", "settings": { } },
+          { "type": "slide", "settings": { } }
+        ]
+      }
+    ]
+  }
+{% endschema %}

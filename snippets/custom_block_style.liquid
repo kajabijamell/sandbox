@@ -1,0 +1,16 @@
+<!-- Block Variables -->
+{% assign b-ID     = block.id %}
+{% assign b-Width  = block.settings.width %}
+{% assign b-Align  = block.settings.alignment %}
+{% assign b-Block  = block.settings.make_block %}
+
+<style>
+  .block--{{ b-ID }} {
+    text-align: {{ b-Align }};
+  }
+  {% unless b-Block %}
+    .block-break--{{ b-ID }} {
+      display: none;
+    }
+  {% endunless %}
+</style>

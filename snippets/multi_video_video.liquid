@@ -1,0 +1,29 @@
+<!-- Block Variables -->
+{% assign b-State  = block.settings.state %}
+{% assign b-Label  = block.settings.label %}
+{% assign b-Title  = block.settings.title %}
+{% assign b-Img    = block.settings.image | image_picker_url: 'multi_video.jpg' %}
+{% assign b-Action = block.settings.action_link %}
+{% assign b-Target    = block.settings.link_target %}
+{% if b-Target %}
+  {% assign b-Target   = "_blank" %}
+{% else %}
+  {% assign b-Target   = "" %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Label = 'label' | settings_id: section: section, block: block %}
+{% assign kjb-Title = 'title' | settings_id: section: section, block: block %}
+{% assign kjb-Img   = 'image' | settings_id: section: section, block: block %}
+
+<div class="col-md-3 video_scroller--item {{ b-State }}">
+  <div class="multi_video multi_video-{{ b-State }}">
+    {% if b-State == "click" %}
+      {% include "multi_video_video_click" %}
+    {% elsif b-State == "locked" %}
+      {% include "multi_video_video_locked" %}
+    {% else %}
+      {% include "multi_video_video_active" %}
+    {% endif %}
+  </div>
+</div>

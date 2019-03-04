@@ -1,0 +1,90 @@
+{% include "custom_block_style" %}
+
+<!-- Block Variables -->
+{% assign b-Text       = block.settings.text %}
+{% assign b-Form       = current_site.find_form[block.settings.form] %}
+{% assign b-FormBg     = block.settings.form_background_color %}
+{% assign b-FormText   = block.settings.form_text_color %}
+{% assign b-ThankYou   = block.settings.thank_you_url %}
+{% assign b-FormLabels = block.settings.style %}
+
+<!-- Form Button Variables -->
+{% assign btnId        = 'btn_text' | settings_id: section: section, block: block %}
+{% assign btnText      = block.settings.btn_text  %}
+{% assign btnColor     = block.settings.btn_background_color | default: settings.color_primary %}
+{% assign btnTextColor = block.settings.btn_text_color | default: settings.text_color_light %}
+{% assign btnStyle     = block.settings.btn_style  %}
+{% assign btnWidth     = block.settings.btn_width  %}
+
+<!-- Conditional Variables -->
+{% if b-FormLabels == "label" %}
+  {% assign use_label       = true %}
+  {% assign use_placeholder = false %}
+{% else %}
+  {% assign use_label       = false %}
+  {% assign use_placeholder = true %}
+{% endif %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-Bg       = 'form_background_color' | settings_id: section: section, block: block %}
+{% assign kjb-Text     = 'text' | settings_id: section: section, block: block %}
+{% assign kjb-Form     = 'form' | settings_id: section: section, block: block %}
+
+<style>
+  .block--{{ b-ID }} .custom-form {
+    {% unless b-FormBg == "" %}
+      padding: 7% 10%;
+      background: {{ b-FormBg }};
+    {% endunless %}
+    {% unless b-FormText == "" %}
+      color: {{ b-FormText }};
+    {% endunless %}
+  }
+  {% unless b-FormText == "" %}
+    .block--{{ b-ID }} .custom-form h1, .block--{{ b-ID }} .custom-form h2, .block--{{ b-ID }} .custom-form h3, .block--{{ b-ID }} .custom-form h4, .block--{{ b-ID }} .custom-form h5, .block--{{ b-ID }} .custom-form h6 {
+      color: {{ b-FormText }};
+    }
+  {% endunless %}
+  .btn--{{ btnId }}.btn--solid {
+    background: {{ btnColor }};
+    border-color: {{ btnColor }};
+    color: {{ btnTextColor }};
+  }
+  .btn--{{ btnId }}.btn--outline {
+    border-color: {{ btnColor }};
+    color: {{ btnColor }};
+  }
+</style>
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>
+
+<div class="{{ b-Width }} block--{{ b-ID }}">
+  <div class="custom-form section--{{ b-FormBg | color_scheme_class }}" kjb-settings-id="{{ kjb-Bg }}">
+    <div kjb-settings-id="{{ kjb-Text }}">
+      {{ b-Text }}
+    </div>
+    {% if b-Form %}
+      {% form b-Form %}
+        <div class="text-xs-left" kjb-settings-id="{{ kjb-Form }}">
+          <input type="hidden" name="thank_you_url" value="{{ b-ThankYou }}">
+          <div class="optin optin--stacked">
+            {% for field in b-Form.fields %}
+              {{ field | form_input: class: "form-group", input_class: "form-control", label: use_label, placeholder: use_placeholder }}
+            {% endfor %}
+            <button class="btn btn--{{ btnId }} btn--{{ btnWidth }} btn--{{ btnStyle }} btn-form" id="form-button" type="submit" kjb-settings-id="{{ btnId }}">{{ btnText }}</button>
+          </div>
+        </div>
+      {% endform %}
+    {% else %}
+      {% if editor %}
+        <div class="editor-null" kjb-settings-id="{{ kjb-Form }}">
+          <h5>Heads up! You have not selected a form yet.</h5>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+
+<!-- Force Line Break -->
+<div class="block-break--{{ b-ID }}"></div>

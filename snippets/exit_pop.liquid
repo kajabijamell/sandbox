@@ -1,0 +1,26 @@
+<style>
+  /*============================================================================
+    #Exit Pop CTA
+  ==============================================================================*/
+  .btn-cta {
+    {% if settings.btn_style == "outline" %}
+      background: transparent;
+      border: 2px solid {{ settings.btn_background_color }};
+      color: {{ settings.btn_background_color }};
+    {% else %}
+      background: {{ settings.btn_background_color }};
+      border: 2px solid {{ settings.btn_background_color }};
+      color: {{ settings.btn_text_color }};
+    {% endif %}
+    width: {{ settings.btn_width }};
+  }
+  .btn-cta:hover {
+    filter: brightness(115%);
+  }
+</style>
+<div id="exit-pop" class="pop">
+  <div kjb-settings-id="exit_pop_text">
+    {{ settings.exit_pop_text }}
+  </div>
+  <a href="{{ settings.btn_action }}" class="btn btn-cta btn-cta--{{ settings.btn_size }} btn-cta--{{ settings.btn_style }}" kjb-settings-id="btn_action">{{ settings.btn_text }}</a>
+</div>

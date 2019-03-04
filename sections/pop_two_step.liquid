@@ -1,0 +1,277 @@
+{% assign pop-BgColor       = section.settings.background_color | default: "#fff" %}
+{% assign pop-TextColor     = section.settings.text_color | default: setting.text_dark %}
+{% assign pop-AutoTextColor = pop-BgColor | color_scheme_class %}
+{% assign pop-Display       = "none" %}
+{% assign f = current_site.find_form[section.settings.form] %}
+
+{% if section.settings.show %}
+  {% if editor %}
+    <style>
+      body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: fixed;
+      }
+      .pop__close {
+        display: none;
+      }
+    </style>
+    {% assign pop-Display = "inline-block" %}
+  {% endif %}
+{% else %}
+  {% if editor %}
+  <style>
+    body.pop-open {
+      height: auto;
+      width: 100%;
+      overflow: visible;
+      position: static;
+    }
+  </style>
+  {% endif %}
+{% endif %}
+
+<style>
+  #two-step {
+    display: {{ pop-Display }};
+    /*============================================================================
+      #Background Color Override
+    ==============================================================================*/
+    {% if pop-TextColor != "" %}
+      /*============================================================================
+        #Text Color Override
+      ==============================================================================*/
+      color: {{ pop-TextColor }};
+    {% endif %}
+  }
+</style>
+
+<div id="two-step" class="pop pop--{{ pop-AutoTextColor }}">
+  <div class="pop__content">
+    <div class="pop__inner">
+      <div class="pop__body" style="background: {{ pop-BgColor }};">
+        <a class="pop__close">
+          Close
+        </a>
+        {% if section.settings.show_img %}
+          <img src="{{ section.settings.image | image_picker_url: 'two_step.jpg'}}" class="img-fluid" kjb-settings-id="{{ 'image' | settings_id: section: section }}"/>
+        {% endif %}
+        <div class="pop__body--inner">
+          {% for block in section.blocks %}
+            <div class="block--{{ block.id }}">
+              {% case block.type %}
+                {% when 'progress' %}
+                  {% include "pop_progress" %}
+                {% when 'image' %}
+                  {% include "pop_image" %}
+                {% when 'text' %}
+                  {% include "pop_text" %}
+              {% endcase %}
+            </div>
+          {% endfor %}
+          {% include "pop_form" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Two Step Optin",
+    "blocks": [
+      {
+        "type": "progress",
+        "name": "Progress Bar",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Progress Bar"
+          },
+          {
+            "type": "text",
+            "id": "progress_percent",
+            "label": "Progress Percent",
+            "default": "50",
+            "info": "Accepts numbers 1 - 100"
+          },
+          {
+            "type": "text",
+            "id": "progress_text",
+            "label": "Progress Text",
+            "default": "% Complete"
+          },
+          {
+            "type": "color",
+            "id": "progress_background_color",
+            "label": "Progress Background Color",
+            "allow_blank": true
+          },
+          {
+            "type": "color",
+            "id": "progress_bar_color",
+            "label": "Progress Bar Color",
+            "allow_blank": true
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "name": "Image",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Suggested dimensions: 1200 × 600",
+            "fit": "max",
+            "width": 2400,
+            "height": 2400
+          },
+          {
+            "type": "text",
+            "id": "img_width",
+            "label": "Custom Image Width",
+            "info": "You may use the format 10px or simply 10. If left blank your image will take its natural width with a max width of 100%.",
+            "default": ""
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "elements": [
+          {
+            "type": "header",
+            "content": "Text"
+          },
+          {
+            "type": "rich_text",
+            "label": "Text",
+            "id": "text",
+            "default": "<h3>Two Step</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+          }
+        ]
+      }
+    ],
+    "elements": [
+      {
+        "type": "checkbox",
+        "id": "show",
+        "label": "Show Popup",
+        "default": "false",
+        "info": "Toggle this to show your popup in the editor. Make sure to uncheck this before you finish editing. Learn more [here](premier_pops)."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_img",
+        "label": "Show Image",
+        "default": "true"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Suggested dimensions: 1200 × 600",
+        "fit": "max",
+        "width": 2400,
+        "height": 2400
+      },
+      {
+        "type": "header",
+        "content": "Form Settings",
+        "style": "subheading"
+      },
+      {
+        "type": "form",
+        "id": "form",
+        "label": "Form",
+        "info": "Select the form you wish to use on this Landing Page.",
+        "default": "default",
+        "allow_blank": true
+      },
+      {
+        "type": "action",
+        "id": "thank_you_url",
+        "label": "Thank You Page",
+        "info": "Leave this field blank to go to the default thank you page."
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "Submit"
+      },
+      {
+        "type": "header",
+        "content": "Form Style",
+        "style": "subheading"
+      },
+      {
+        "type": "radio",
+        "label": "Input Label",
+        "id": "style",
+        "default": "placeholder",
+        "options": [
+          { "label": "Placeholder", "value": "placeholder" },
+          { "label": "Label", "value": "label" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "btn_style",
+        "label": "Button Style",
+        "default": "solid",
+        "options": [
+          { "label": "Solid", "value": "solid" },
+          { "label": "Outline", "value": "outline" }
+        ]
+      },
+      {
+        "type": "radio",
+        "id": "btn_width",
+        "label": "Button Width",
+        "default": "auto",
+        "options": [
+          { "label": "Auto", "value": "auto" },
+          { "label": "Full Width", "value": "block" }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "btn_background_color",
+        "label": "Button Color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "allow_blank": true,
+        "info": "For solid buttons only"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      }
+    ]
+  }
+{% endschema %}

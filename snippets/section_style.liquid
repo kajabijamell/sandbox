@@ -1,0 +1,61 @@
+<!-- Section Virables -->
+{% assign s-ID            = section.id %}
+{% assign s-BgImage       = bgImage %}
+{% assign s-UseBgImage    = section.settings.show_img %}
+{% assign s-UseBgOverlay  = section.settings.show_overlay %}
+{% if s-BgImage == true %}
+  {% if s-UseBgOverlay == true %}
+    {% assign s-BgColor       = section.settings.background_color | default: bgColor %}
+  {% else %}
+    {% assign s-BgColor       = "rgba(0,0,0,0)" %}
+  {% endif %}
+{% else %}
+  {% assign s-BgColor       = section.settings.background_color | default: bgColor %}
+{% endif %}
+{% assign s-BgImage       = section.settings.bg_image | image_picker_url: defaultImg %}
+{% assign s-AutoTextColor = s-BgColor | color_scheme_class %}
+{% assign s-TextColor     = section.settings.text_color | default: "" %}
+{% assign s-Spacing       = section.settings.spacing %}
+{% assign s-VertAlign     = vertAlign %}
+
+<!-- Contitional Section Virables -->
+{% if s-Spacing == "full" %}
+  {% assign s-SplashWrapper = "splash-wrapper" %}
+  {% assign s-Splash        = "splash" %}
+{% else %}
+  {% assign s-SplashWrapper = "" %}
+  {% assign s-Splash        = "" %}
+{% endif %}
+
+<!-- Kjb Section Variabels -->
+{% assign kjb-Background  = 'background_color' | settings_id: section: section %}
+
+<style>
+  {% if s-UseBgImage %}
+    .background-image--{{ s-ID }} {
+      background-image: url({{ s-BgImage }});
+    }
+  {% endif %}
+  .section--{{ s-ID }} {
+    /*============================================================================
+      #Background Color Override
+    ==============================================================================*/
+    background: {{ s-BgColor }};
+  }
+  {% if s-TextColor != "" %}
+    .section--{{ s-ID }}, .section--{{ s-ID }} h1, .section--{{ s-ID }} h2, .section--{{ s-ID }} h3, .section--{{ s-ID }} h4, .section--{{ s-ID }} h5 , .section--{{ s-ID }} h6  {
+      /*============================================================================
+        #Text Color Override
+      ==============================================================================*/
+      color: {{ s-TextColor }};
+    }
+  {% endif %}
+  .section--link_list.section--dark.section--{{ s-ID }} a, .section--link_list.section--light.section--{{ s-ID }} a, .section--blog_posts.section--dark.section--{{ s-ID }} a, .section--blog_posts.section--light.section--{{ s-ID }} a, .section--feature.section--dark.section--{{ s-ID }} a, .section--feature.section--light.section--{{ s-ID }} a {
+    {% if s-TextColor != "" %}
+      /*============================================================================
+        #Text Color Override
+      ==============================================================================*/
+      color: {{ s-TextColor }};
+    {% endif %}
+  }
+</style>

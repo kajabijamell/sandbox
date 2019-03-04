@@ -1,0 +1,66 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "middle" %}
+
+<!-- Spacer Variables -->
+{% assign space-Height  = section.settings.height | remove: 'px' %}
+{% assign space-ShowHr  = section.settings.hr %}
+{% assign space-HrColor = section.settings.hr_color %}
+
+<style>
+  .section--{{ s-ID }} {
+    height: {{ space-Height  }}px;
+  }
+  .section--{{ s-ID }} hr {
+    border-top: 1px solid {{ space-HrColor }}
+  }
+</style>
+
+<div id="" class="section section--spacer section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-ID }}" kjb-settings-id="{{ kjb-Background }}">
+  {% if space-ShowHr %}
+    <hr/>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Spacer",
+    "elements": [
+      {
+        "type": "checkbox",
+        "id": "hr",
+        "label": "Insert Horizontal Rule",
+        "default": "false"
+      },
+      {
+        "type": "color",
+        "id": "hr_color",
+        "label": "Horizontal Rule Color",
+        "default": "#eeeeee"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "text",
+        "id": "height",
+        "label": "Height",
+        "info": "You may use the format 10px or simply 10. Works Best Between 10 and 20.",
+        "default": "44"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Spacer",
+        "description": "A section to create space and organize content.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}

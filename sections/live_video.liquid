@@ -1,0 +1,100 @@
+{% include "section_style", bgColor: "#fff", vertAlign: "middle" %}
+
+<!-- Section Variables -->
+{% assign s-VideoCode   = section.settings.video_code %}
+{% assign s-ShowChat    = section.settings.show_chat %}
+
+<!-- KJB Settings Variables -->
+{% assign kjb-VideoCode = 'video_code' | settings_id: section: section %}
+
+<div class="{{ s-SplashWrapper }}">
+  <div id="" class="section section--live_video section--{{ s-VertAlign }} section--{{ s-Spacing }} section--{{ s-AutoTextColor }} section--{{ s-ID }} {{ s-Splash }}" kjb-settings-id="{{ kjb-Background }}">
+    <div class="container">
+      {% include "section_heading" %}
+      <div class="row">
+        {% if s-ShowChat %} <div class="col-md-8"> {% else %} <div class="col-md-10"> {% endif %}
+          <div class="responsive-video" kjb-settings-id="{{ kjb-VideoCode }}">
+            <iframe src="https://www.youtube.com/embed/{{ s-VideoCode }}" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        {% if s-ShowChat %}
+          <div class="col-md-4">
+            <div class="video-chat">
+              <iframe src='https://www.youtube.com/live_chat?v={{ s-VideoCode }}&embed_domain={{canonical_url | remove: "https://" | remove: "http://" | split: "/" | first }}' frameborder='0' allowfullscreen></iframe>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "YouTube Live",
+    "elements": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "YouTube Live"
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "Use this section to add your youtube live video and have chat going on at the same time."
+      },
+      {
+        "type": "text",
+        "label": "Video ID",
+        "id": "video_code",
+        "default": "",
+        "info": "Learn about creating your YouTube Live event and attaching it to this page [here](setup_live_webinar)."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_chat",
+        "label": "Show Chat",
+        "default": "true"
+      },
+      {
+        "type": "header",
+        "content": "Section Appearance",
+        "style": "subheading"
+      },
+      {
+        "type": "color",
+        "label": "Background Color Override",
+        "id": "background_color",
+        "allow_blank": true
+      },
+      {
+        "type": "color",
+        "label": "Text Color Override",
+        "id": "text_color",
+        "allow_blank": true
+      },
+      {
+        "type": "select",
+        "id": "spacing",
+        "label": "Spacing",
+        "default": "medium",
+        "options": [
+          { "label": "Extra Small", "value": "xs-small" },
+          { "label": "Small", "value": "small" },
+          { "label": "Medium", "value": "medium" },
+          { "label": "Large", "value": "large" },
+          { "label": "Full Height", "value": "full" }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "YouTube Live",
+        "description": "Use this section to stream via YouTube Live while simultaneously offering a live chat feature.",
+        "category": "Content"
+      }
+    ]
+  }
+{% endschema %}
